@@ -1,0 +1,373 @@
+{
+  "matches": [
+    {
+      "id": "match_001",
+      "date": "2024-01-15",
+      "season": "2024",
+      "ageGroup": "U15",
+      "competition": "U15 리그",
+      "venue": "서울 아이스링크",
+      "homeTeam": "leopards",
+      "awayTeam": "bears",
+      "homeScore": 3,
+      "awayScore": 1,
+      "homeShots": 28,
+      "awayShots": 22,
+      "homePenalties": 4,
+      "awayPenalties": 6,
+      "homePP": 1,
+      "awayPP": 0,
+      "homePK": 3,
+      "awayPK": 4,
+      "periods": [
+        {"period": 1, "homeScore": 1, "awayScore": 0},
+        {"period": 2, "homeScore": 1, "awayScore": 1},
+        {"period": 3, "homeScore": 1, "awayScore": 0}
+      ],
+      "scorers": [
+        {"team": "home", "player": "박민수", "time": "05:23", "period": 1},
+        {"team": "away", "player": "이동현", "time": "28:45", "period": 2},
+        {"team": "home", "player": "김철수", "time": "32:12", "period": 2},
+        {"team": "home", "player": "박민수", "time": "52:18", "period": 3}
+      ],
+      "penalties": [
+        {"team": "home", "player": "김철수", "time": "12:30", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "away", "player": "이동현", "time": "15:45", "period": 1, "duration": 2, "reason": "홀딩"},
+        {"team": "home", "player": "박민수", "time": "25:12", "period": 2, "duration": 2, "reason": "슬래싱"},
+        {"team": "away", "player": "정민호", "time": "38:20", "period": 2, "duration": 2, "reason": "인터피어런스"}
+      ]
+    },
+    {
+      "id": "match_002",
+      "date": "2024-01-12",
+      "season": "2024",
+      "ageGroup": "U18",
+      "competition": "U18 리그",
+      "venue": "부산 아이스링크",
+      "homeTeam": "tigers",
+      "awayTeam": "dragons",
+      "homeScore": 2,
+      "awayScore": 2,
+      "homeShots": 25,
+      "awayShots": 30,
+      "homePenalties": 3,
+      "awayPenalties": 5,
+      "homePP": 1,
+      "awayPP": 1,
+      "homePK": 4,
+      "awayPK": 3,
+      "periods": [
+        {"period": 1, "homeScore": 0, "awayScore": 1},
+        {"period": 2, "homeScore": 1, "awayScore": 0},
+        {"period": 3, "homeScore": 1, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "away", "player": "김성민", "time": "08:15", "period": 1},
+        {"team": "home", "player": "최준호", "time": "25:30", "period": 2},
+        {"team": "home", "player": "이영수", "time": "45:12", "period": 3},
+        {"team": "away", "player": "최영철", "time": "58:45", "period": 3}
+      ],
+      "penalties": [
+        {"team": "home", "player": "최준호", "time": "10:20", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "away", "player": "김성민", "time": "22:15", "period": 2, "duration": 2, "reason": "홀딩"},
+        {"team": "home", "player": "이영수", "time": "35:40", "period": 2, "duration": 2, "reason": "슬래싱"},
+        {"team": "away", "player": "최영철", "time": "48:30", "period": 3, "duration": 2, "reason": "인터피어런스"}
+      ]
+    },
+    {
+      "id": "match_003",
+      "date": "2024-01-10",
+      "season": "2024",
+      "ageGroup": "U12",
+      "competition": "U12 리그",
+      "venue": "대구 아이스링크",
+      "homeTeam": "eagles",
+      "awayTeam": "sharks",
+      "homeScore": 4,
+      "awayScore": 2,
+      "homeShots": 32,
+      "awayShots": 25,
+      "homePenalties": 2,
+      "awayPenalties": 4,
+      "homePP": 2,
+      "awayPP": 1,
+      "homePK": 5,
+      "awayPK": 4,
+      "periods": [
+        {"period": 1, "homeScore": 2, "awayScore": 0},
+        {"period": 2, "homeScore": 1, "awayScore": 1},
+        {"period": 3, "homeScore": 1, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "home", "player": "김태현", "time": "03:45", "period": 1},
+        {"team": "home", "player": "박지성", "time": "12:20", "period": 1},
+        {"team": "away", "player": "박소연", "time": "28:15", "period": 2},
+        {"team": "home", "player": "김태현", "time": "35:40", "period": 2},
+        {"team": "home", "player": "박지성", "time": "48:30", "period": 3},
+        {"team": "away", "player": "김수진", "time": "55:12", "period": 3}
+      ],
+      "penalties": [
+        {"team": "away", "player": "박소연", "time": "05:30", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "home", "player": "김태현", "time": "20:15", "period": 2, "duration": 2, "reason": "홀딩"},
+        {"team": "away", "player": "김수진", "time": "25:40", "period": 2, "duration": 2, "reason": "슬래싱"},
+        {"team": "home", "player": "박지성", "time": "42:20", "period": 3, "duration": 2, "reason": "인터피어런스"}
+      ]
+    },
+    {
+      "id": "match_004",
+      "date": "2024-01-08",
+      "season": "2024",
+      "ageGroup": "U15",
+      "competition": "U15 리그",
+      "venue": "인천 아이스링크",
+      "homeTeam": "bears",
+      "awayTeam": "leopards",
+      "homeScore": 1,
+      "awayScore": 3,
+      "homeShots": 20,
+      "awayShots": 35,
+      "homePenalties": 6,
+      "awayPenalties": 3,
+      "homePP": 0,
+      "awayPP": 1,
+      "homePK": 4,
+      "awayPK": 5,
+      "periods": [
+        {"period": 1, "homeScore": 0, "awayScore": 1},
+        {"period": 2, "homeScore": 1, "awayScore": 1},
+        {"period": 3, "homeScore": 0, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "away", "player": "박민수", "time": "06:45", "period": 1},
+        {"team": "home", "player": "이동현", "time": "25:30", "period": 2},
+        {"team": "away", "player": "김철수", "time": "32:15", "period": 2},
+        {"team": "away", "player": "박민수", "time": "48:20", "period": 3}
+      ],
+      "penalties": [
+        {"team": "home", "player": "이동현", "time": "08:20", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "away", "player": "박민수", "time": "15:30", "period": 1, "duration": 2, "reason": "홀딩"},
+        {"team": "home", "player": "정민호", "time": "22:45", "period": 2, "duration": 2, "reason": "슬래싱"},
+        {"team": "away", "player": "김철수", "time": "35:15", "period": 2, "duration": 2, "reason": "인터피어런스"}
+      ]
+    },
+    {
+      "id": "match_005",
+      "date": "2024-01-05",
+      "season": "2024",
+      "ageGroup": "U18",
+      "competition": "U18 리그",
+      "venue": "광주 아이스링크",
+      "homeTeam": "dragons",
+      "awayTeam": "tigers",
+      "homeScore": 1,
+      "awayScore": 2,
+      "homeShots": 28,
+      "awayShots": 22,
+      "homePenalties": 5,
+      "awayPenalties": 3,
+      "homePP": 0,
+      "awayPP": 1,
+      "homePK": 4,
+      "awayPK": 5,
+      "periods": [
+        {"period": 1, "homeScore": 0, "awayScore": 1},
+        {"period": 2, "homeScore": 1, "awayScore": 0},
+        {"period": 3, "homeScore": 0, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "away", "player": "최준호", "time": "12:30", "period": 1},
+        {"team": "home", "player": "김성민", "time": "28:45", "period": 2},
+        {"team": "away", "player": "이영수", "time": "52:15", "period": 3}
+      ],
+      "penalties": [
+        {"team": "home", "player": "김성민", "time": "05:15", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "away", "player": "최준호", "time": "18:20", "period": 2, "duration": 2, "reason": "홀딩"},
+        {"team": "home", "player": "최영철", "time": "25:40", "period": 2, "duration": 2, "reason": "슬래싱"},
+        {"team": "away", "player": "이영수", "time": "38:15", "period": 3, "duration": 2, "reason": "인터피어런스"}
+      ]
+    },
+    {
+      "id": "match_006",
+      "date": "2024-01-03",
+      "season": "2024",
+      "ageGroup": "U10",
+      "competition": "U10 리그",
+      "venue": "울산 아이스링크",
+      "homeTeam": "sharks",
+      "awayTeam": "eagles",
+      "homeScore": 2,
+      "awayScore": 3,
+      "homeShots": 18,
+      "awayShots": 25,
+      "homePenalties": 3,
+      "awayPenalties": 2,
+      "homePP": 1,
+      "awayPP": 1,
+      "homePK": 4,
+      "awayPK": 5,
+      "periods": [
+        {"period": 1, "homeScore": 1, "awayScore": 1},
+        {"period": 2, "homeScore": 0, "awayScore": 1},
+        {"period": 3, "homeScore": 1, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "home", "player": "박소연", "time": "08:30", "period": 1},
+        {"team": "away", "player": "김태현", "time": "12:15", "period": 1},
+        {"team": "away", "player": "박지성", "time": "28:45", "period": 2},
+        {"team": "home", "player": "김수진", "time": "45:20", "period": 3},
+        {"team": "away", "player": "김태현", "time": "52:10", "period": 3}
+      ],
+      "penalties": [
+        {"team": "home", "player": "박소연", "time": "15:20", "period": 1, "duration": 2, "reason": "홀딩"},
+        {"team": "away", "player": "김태현", "time": "22:30", "period": 2, "duration": 2, "reason": "트리핑"},
+        {"team": "home", "player": "김수진", "time": "38:15", "period": 2, "duration": 2, "reason": "슬래싱"}
+      ]
+    },
+    {
+      "id": "match_007",
+      "date": "2023-12-28",
+      "season": "2023",
+      "ageGroup": "U15",
+      "competition": "U15 리그",
+      "venue": "서울 아이스링크",
+      "homeTeam": "leopards",
+      "awayTeam": "eagles",
+      "homeScore": 2,
+      "awayScore": 1,
+      "homeShots": 30,
+      "awayShots": 22,
+      "homePenalties": 3,
+      "awayPenalties": 4,
+      "homePP": 1,
+      "awayPP": 0,
+      "homePK": 4,
+      "awayPK": 3,
+      "periods": [
+        {"period": 1, "homeScore": 0, "awayScore": 0},
+        {"period": 2, "homeScore": 1, "awayScore": 0},
+        {"period": 3, "homeScore": 1, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "home", "player": "박민수", "time": "25:30", "period": 2},
+        {"team": "away", "player": "김태현", "time": "48:15", "period": 3},
+        {"team": "home", "player": "김철수", "time": "55:20", "period": 3}
+      ],
+      "penalties": [
+        {"team": "home", "player": "박민수", "time": "12:45", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "away", "player": "김태현", "time": "18:20", "period": 1, "duration": 2, "reason": "홀딩"},
+        {"team": "home", "player": "김철수", "time": "32:10", "period": 2, "duration": 2, "reason": "슬래싱"},
+        {"team": "away", "player": "박지성", "time": "42:30", "period": 3, "duration": 2, "reason": "인터피어런스"}
+      ]
+    },
+    {
+      "id": "match_008",
+      "date": "2023-12-25",
+      "season": "2023",
+      "ageGroup": "U18",
+      "competition": "U18 리그",
+      "venue": "부산 아이스링크",
+      "homeTeam": "tigers",
+      "awayTeam": "leopards",
+      "homeScore": 3,
+      "awayScore": 1,
+      "homeShots": 28,
+      "awayShots": 20,
+      "homePenalties": 2,
+      "awayPenalties": 5,
+      "homePP": 1,
+      "awayPP": 0,
+      "homePK": 5,
+      "awayPK": 4,
+      "periods": [
+        {"period": 1, "homeScore": 1, "awayScore": 0},
+        {"period": 2, "homeScore": 1, "awayScore": 0},
+        {"period": 3, "homeScore": 1, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "home", "player": "최준호", "time": "08:45", "period": 1},
+        {"team": "home", "player": "이영수", "time": "28:20", "period": 2},
+        {"team": "away", "player": "박민수", "time": "48:30", "period": 3},
+        {"team": "home", "player": "최준호", "time": "55:15", "period": 3}
+      ],
+      "penalties": [
+        {"team": "away", "player": "박민수", "time": "15:30", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "home", "player": "최준호", "time": "22:15", "period": 2, "duration": 2, "reason": "홀딩"},
+        {"team": "away", "player": "김철수", "time": "35:40", "period": 2, "duration": 2, "reason": "슬래싱"},
+        {"team": "home", "player": "이영수", "time": "42:20", "period": 3, "duration": 2, "reason": "인터피어런스"}
+      ]
+    },
+    {
+      "id": "match_009",
+      "date": "2023-12-22",
+      "season": "2023",
+      "ageGroup": "U12",
+      "competition": "U12 리그",
+      "venue": "대구 아이스링크",
+      "homeTeam": "eagles",
+      "awayTeam": "sharks",
+      "homeScore": 3,
+      "awayScore": 1,
+      "homeShots": 26,
+      "awayShots": 18,
+      "homePenalties": 2,
+      "awayPenalties": 3,
+      "homePP": 1,
+      "awayPP": 0,
+      "homePK": 4,
+      "awayPK": 3,
+      "periods": [
+        {"period": 1, "homeScore": 1, "awayScore": 0},
+        {"period": 2, "homeScore": 1, "awayScore": 0},
+        {"period": 3, "homeScore": 1, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "home", "player": "김태현", "time": "06:20", "period": 1},
+        {"team": "home", "player": "박지성", "time": "28:45", "period": 2},
+        {"team": "away", "player": "박소연", "time": "48:30", "period": 3},
+        {"team": "home", "player": "김태현", "time": "54:15", "period": 3}
+      ],
+      "penalties": [
+        {"team": "away", "player": "박소연", "time": "12:30", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "home", "player": "김태현", "time": "25:15", "period": 2, "duration": 2, "reason": "홀딩"},
+        {"team": "away", "player": "김수진", "time": "38:20", "period": 2, "duration": 2, "reason": "슬래싱"}
+      ]
+    },
+    {
+      "id": "match_010",
+      "date": "2023-12-20",
+      "season": "2023",
+      "ageGroup": "U15",
+      "competition": "U15 리그",
+      "venue": "서울 아이스링크",
+      "homeTeam": "leopards",
+      "awayTeam": "bears",
+      "homeScore": 2,
+      "awayScore": 2,
+      "homeShots": 25,
+      "awayShots": 28,
+      "homePenalties": 4,
+      "awayPenalties": 3,
+      "homePP": 1,
+      "awayPP": 1,
+      "homePK": 4,
+      "awayPK": 3,
+      "periods": [
+        {"period": 1, "homeScore": 1, "awayScore": 0},
+        {"period": 2, "homeScore": 0, "awayScore": 1},
+        {"period": 3, "homeScore": 1, "awayScore": 1}
+      ],
+      "scorers": [
+        {"team": "home", "player": "박민수", "time": "05:15", "period": 1},
+        {"team": "away", "player": "이동현", "time": "28:30", "period": 2},
+        {"team": "home", "player": "김철수", "time": "45:20", "period": 3},
+        {"team": "away", "player": "정민호", "time": "58:45", "period": 3}
+      ],
+      "penalties": [
+        {"team": "home", "player": "김철수", "time": "10:20", "period": 1, "duration": 2, "reason": "트리핑"},
+        {"team": "away", "player": "이동현", "time": "18:45", "period": 1, "duration": 2, "reason": "홀딩"},
+        {"team": "home", "player": "박민수", "time": "32:15", "period": 2, "duration": 2, "reason": "슬래싱"},
+        {"team": "away", "player": "정민호", "time": "42:30", "period": 3, "duration": 2, "reason": "인터피어런스"}
+      ]
+    }
+  ]
+}

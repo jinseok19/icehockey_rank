@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>페이지를 찾을 수 없습니다 - 아이스하키 랭킹</title>
+    <meta name="description" content="요청하신 페이지를 찾을 수 없습니다">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="/" class="logo-link">
+                    <img src="assets/img/logo.svg" alt="아이스하키 랭킹" class="logo-img">
+                    <span class="logo-text">아이스하키 랭킹</span>
+                </a>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="global-search" class="search-input" placeholder="팀명을 검색하세요 (예: 레오파즈)">
+                    <button class="search-btn" aria-label="검색">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <div id="search-suggestions" class="search-suggestions"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="error-state">
+            <div class="error-icon">🏒</div>
+            <h1>404 - 페이지를 찾을 수 없습니다</h1>
+            <p>요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.</p>
+            
+            <div class="error-actions">
+                <a href="/" class="btn-primary">홈으로 돌아가기</a>
+                <a href="javascript:history.back()" class="btn-secondary">이전 페이지로</a>
+            </div>
+
+            <div class="error-suggestions">
+                <h3>다음 페이지들을 확인해보세요:</h3>
+                <ul>
+                    <li><a href="/">🏠 홈페이지</a> - 메인 페이지로 이동</li>
+                    <li><a href="/team.html?name=레오파즈">🏒 레오파즈 팀 정보</a> - 인기 팀 상세보기</li>
+                    <li><a href="/team.html?name=타이거스">🐯 타이거스 팀 정보</a> - 강력한 U18 팀</li>
+                    <li><a href="/match.html?id=match_001">⚽ 최근 경기</a> - 최신 경기 결과</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 아이스하키 랭킹. 모든 데이터는 참고용입니다.</p>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>

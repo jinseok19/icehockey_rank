@@ -1,0 +1,220 @@
+{
+  "rivals": [
+    {
+      "teamId": "leopards",
+      "opponents": [
+        {
+          "opponentId": "bears",
+          "totalMatches": 8,
+          "wins": 5,
+          "draws": 1,
+          "losses": 2,
+          "goalsFor": 18,
+          "goalsAgainst": 12,
+          "recentMatches": [
+            {"date": "2024-01-15", "homeTeam": "leopards", "awayTeam": "bears", "homeScore": 3, "awayScore": 1, "venue": "서울 아이스링크"},
+            {"date": "2024-01-08", "homeTeam": "bears", "awayTeam": "leopards", "homeScore": 1, "awayScore": 3, "venue": "인천 아이스링크"},
+            {"date": "2023-12-20", "homeTeam": "leopards", "awayTeam": "bears", "homeScore": 2, "awayScore": 2, "venue": "서울 아이스링크"},
+            {"date": "2023-11-15", "homeTeam": "bears", "awayTeam": "leopards", "homeScore": 0, "awayScore": 2, "venue": "인천 아이스링크"},
+            {"date": "2023-10-28", "homeTeam": "leopards", "awayTeam": "bears", "homeScore": 4, "awayScore": 1, "venue": "서울 아이스링크"}
+          ],
+          "trend": "승세",
+          "avgGoalsFor": 2.25,
+          "avgGoalsAgainst": 1.5,
+          "winRate": 62.5
+        },
+        {
+          "opponentId": "tigers",
+          "totalMatches": 6,
+          "wins": 2,
+          "draws": 1,
+          "losses": 3,
+          "goalsFor": 12,
+          "goalsAgainst": 15,
+          "recentMatches": [
+            {"date": "2023-12-25", "homeTeam": "tigers", "awayTeam": "leopards", "homeScore": 3, "awayScore": 1, "venue": "부산 아이스링크"},
+            {"date": "2023-12-10", "homeTeam": "leopards", "awayTeam": "tigers", "homeScore": 1, "awayScore": 2, "venue": "서울 아이스링크"},
+            {"date": "2023-11-25", "homeTeam": "tigers", "awayTeam": "leopards", "homeScore": 3, "awayScore": 1, "venue": "부산 아이스링크"},
+            {"date": "2023-10-15", "homeTeam": "leopards", "awayTeam": "tigers", "homeScore": 2, "awayScore": 2, "venue": "서울 아이스링크"}
+          ],
+          "trend": "열세",
+          "avgGoalsFor": 2.0,
+          "avgGoalsAgainst": 2.5,
+          "winRate": 33.3
+        },
+        {
+          "opponentId": "eagles",
+          "totalMatches": 4,
+          "wins": 3,
+          "draws": 0,
+          "losses": 1,
+          "goalsFor": 10,
+          "goalsAgainst": 6,
+          "recentMatches": [
+            {"date": "2023-12-28", "homeTeam": "leopards", "awayTeam": "eagles", "homeScore": 2, "awayScore": 1, "venue": "서울 아이스링크"},
+            {"date": "2023-12-05", "homeTeam": "eagles", "awayTeam": "leopards", "homeScore": 1, "awayScore": 3, "venue": "대구 아이스링크"},
+            {"date": "2023-11-10", "homeTeam": "leopards", "awayTeam": "eagles", "homeScore": 2, "awayScore": 1, "venue": "서울 아이스링크"}
+          ],
+          "trend": "승세",
+          "avgGoalsFor": 2.5,
+          "avgGoalsAgainst": 1.5,
+          "winRate": 75.0
+        }
+      ]
+    },
+    {
+      "teamId": "tigers",
+      "opponents": [
+        {
+          "opponentId": "dragons",
+          "totalMatches": 7,
+          "wins": 4,
+          "draws": 2,
+          "losses": 1,
+          "goalsFor": 16,
+          "goalsAgainst": 12,
+          "recentMatches": [
+            {"date": "2024-01-12", "homeTeam": "tigers", "awayTeam": "dragons", "homeScore": 2, "awayScore": 2, "venue": "부산 아이스링크"},
+            {"date": "2024-01-05", "homeTeam": "dragons", "awayTeam": "tigers", "homeScore": 1, "awayScore": 2, "venue": "광주 아이스링크"},
+            {"date": "2023-12-18", "homeTeam": "tigers", "awayTeam": "dragons", "homeScore": 3, "awayScore": 1, "venue": "부산 아이스링크"}
+          ],
+          "trend": "승세",
+          "avgGoalsFor": 2.29,
+          "avgGoalsAgainst": 1.71,
+          "winRate": 57.1
+        },
+        {
+          "opponentId": "leopards",
+          "totalMatches": 6,
+          "wins": 3,
+          "draws": 1,
+          "losses": 2,
+          "goalsFor": 15,
+          "goalsAgainst": 12,
+          "recentMatches": [
+            {"date": "2023-12-25", "homeTeam": "tigers", "awayTeam": "leopards", "homeScore": 3, "awayScore": 1, "venue": "부산 아이스링크"},
+            {"date": "2023-12-10", "homeTeam": "leopards", "awayTeam": "tigers", "homeScore": 1, "awayScore": 2, "venue": "서울 아이스링크"},
+            {"date": "2023-11-25", "homeTeam": "tigers", "awayTeam": "leopards", "homeScore": 3, "awayScore": 1, "venue": "부산 아이스링크"},
+            {"date": "2023-10-15", "homeTeam": "leopards", "awayTeam": "tigers", "homeScore": 2, "awayScore": 2, "venue": "서울 아이스링크"}
+          ],
+          "trend": "승세",
+          "avgGoalsFor": 2.5,
+          "avgGoalsAgainst": 2.0,
+          "winRate": 50.0
+        }
+      ]
+    },
+    {
+      "teamId": "eagles",
+      "opponents": [
+        {
+          "opponentId": "sharks",
+          "totalMatches": 5,
+          "wins": 3,
+          "draws": 1,
+          "losses": 1,
+          "goalsFor": 14,
+          "goalsAgainst": 8,
+          "recentMatches": [
+            {"date": "2024-01-10", "homeTeam": "eagles", "awayTeam": "sharks", "homeScore": 4, "awayScore": 2, "venue": "대구 아이스링크"},
+            {"date": "2024-01-03", "homeTeam": "sharks", "awayTeam": "eagles", "homeScore": 2, "awayScore": 3, "venue": "울산 아이스링크"},
+            {"date": "2023-12-22", "homeTeam": "eagles", "awayTeam": "sharks", "homeScore": 3, "awayScore": 1, "venue": "대구 아이스링크"}
+          ],
+          "trend": "승세",
+          "avgGoalsFor": 2.8,
+          "avgGoalsAgainst": 1.6,
+          "winRate": 60.0
+        },
+        {
+          "opponentId": "leopards",
+          "totalMatches": 4,
+          "wins": 1,
+          "draws": 0,
+          "losses": 3,
+          "goalsFor": 6,
+          "goalsAgainst": 10,
+          "recentMatches": [
+            {"date": "2023-12-28", "homeTeam": "leopards", "awayTeam": "eagles", "homeScore": 2, "awayScore": 1, "venue": "서울 아이스링크"},
+            {"date": "2023-12-05", "homeTeam": "eagles", "awayTeam": "leopards", "homeScore": 1, "awayScore": 3, "venue": "대구 아이스링크"},
+            {"date": "2023-11-10", "homeTeam": "leopards", "awayTeam": "eagles", "homeScore": 2, "awayScore": 1, "venue": "서울 아이스링크"}
+          ],
+          "trend": "열세",
+          "avgGoalsFor": 1.5,
+          "avgGoalsAgainst": 2.5,
+          "winRate": 25.0
+        }
+      ]
+    },
+    {
+      "teamId": "bears",
+      "opponents": [
+        {
+          "opponentId": "leopards",
+          "totalMatches": 8,
+          "wins": 2,
+          "draws": 1,
+          "losses": 5,
+          "goalsFor": 12,
+          "goalsAgainst": 18,
+          "recentMatches": [
+            {"date": "2024-01-15", "homeTeam": "leopards", "awayTeam": "bears", "homeScore": 3, "awayScore": 1, "venue": "서울 아이스링크"},
+            {"date": "2024-01-08", "homeTeam": "bears", "awayTeam": "leopards", "homeScore": 1, "awayScore": 3, "venue": "인천 아이스링크"},
+            {"date": "2023-12-20", "homeTeam": "leopards", "awayTeam": "bears", "homeScore": 2, "awayScore": 2, "venue": "서울 아이스링크"},
+            {"date": "2023-11-15", "homeTeam": "bears", "awayTeam": "leopards", "homeScore": 0, "awayScore": 2, "venue": "인천 아이스링크"},
+            {"date": "2023-10-28", "homeTeam": "leopards", "awayTeam": "bears", "homeScore": 4, "awayScore": 1, "venue": "서울 아이스링크"}
+          ],
+          "trend": "열세",
+          "avgGoalsFor": 1.5,
+          "avgGoalsAgainst": 2.25,
+          "winRate": 25.0
+        }
+      ]
+    },
+    {
+      "teamId": "dragons",
+      "opponents": [
+        {
+          "opponentId": "tigers",
+          "totalMatches": 7,
+          "wins": 1,
+          "draws": 2,
+          "losses": 4,
+          "goalsFor": 12,
+          "goalsAgainst": 16,
+          "recentMatches": [
+            {"date": "2024-01-12", "homeTeam": "tigers", "awayTeam": "dragons", "homeScore": 2, "awayScore": 2, "venue": "부산 아이스링크"},
+            {"date": "2024-01-05", "homeTeam": "dragons", "awayTeam": "tigers", "homeScore": 1, "awayScore": 2, "venue": "광주 아이스링크"},
+            {"date": "2023-12-18", "homeTeam": "tigers", "awayTeam": "dragons", "homeScore": 3, "awayScore": 1, "venue": "부산 아이스링크"}
+          ],
+          "trend": "열세",
+          "avgGoalsFor": 1.71,
+          "avgGoalsAgainst": 2.29,
+          "winRate": 14.3
+        }
+      ]
+    },
+    {
+      "teamId": "sharks",
+      "opponents": [
+        {
+          "opponentId": "eagles",
+          "totalMatches": 5,
+          "wins": 1,
+          "draws": 1,
+          "losses": 3,
+          "goalsFor": 8,
+          "goalsAgainst": 14,
+          "recentMatches": [
+            {"date": "2024-01-10", "homeTeam": "eagles", "awayTeam": "sharks", "homeScore": 4, "awayScore": 2, "venue": "대구 아이스링크"},
+            {"date": "2024-01-03", "homeTeam": "sharks", "awayTeam": "eagles", "homeScore": 2, "awayScore": 3, "venue": "울산 아이스링크"},
+            {"date": "2023-12-22", "homeTeam": "eagles", "awayTeam": "sharks", "homeScore": 3, "awayScore": 1, "venue": "대구 아이스링크"}
+          ],
+          "trend": "열세",
+          "avgGoalsFor": 1.6,
+          "avgGoalsAgainst": 2.8,
+          "winRate": 20.0
+        }
+      ]
+    }
+  ]
+}
