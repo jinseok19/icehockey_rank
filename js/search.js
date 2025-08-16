@@ -33,6 +33,33 @@ const SearchManager = {
       });
     }
 
+    // 히어로 검색 이벤트
+    const heroSearch = document.getElementById('hero-search');
+    if (heroSearch) {
+      heroSearch.addEventListener('input', (e) => {
+        this.handleHeroSearch(e.target.value);
+      });
+
+      heroSearch.addEventListener('focus', () => {
+        this.showHeroSuggestions();
+      });
+
+      // 히어로 검색 버튼 클릭 이벤트
+      const heroSearchBtn = document.querySelector('.hero-search-btn');
+      if (heroSearchBtn) {
+        heroSearchBtn.addEventListener('click', () => {
+          this.performHeroSearch(heroSearch.value);
+        });
+      }
+
+      // Enter 키 이벤트
+      heroSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          this.performHeroSearch(e.target.value);
+        }
+      });
+    }
+
     // 검색 제안 클릭 이벤트
     document.addEventListener('click', (e) => {
       if (e.target.matches('.suggestion-item')) {
@@ -43,8 +70,9 @@ const SearchManager = {
 
     // 검색 제안 외부 클릭 시 숨김
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.search-wrapper')) {
+      if (!e.target.closest('.search-wrapper') && !e.target.closest('.hero-search-wrapper')) {
         this.hideSuggestions();
+        this.hideHeroSuggestions();
       }
     });
   },
@@ -215,6 +243,87 @@ const SearchManager = {
       // 3초 후 자동으로 숨김
       setTimeout(() => {
         this.hideSuggestions();
+      }, 3000);
+    }
+  },
+
+  performHeroSearch(query) {
+    if (!query.trim()) return;
+
+    const suggestions = this.getSearchSuggestions(query);
+    
+    if (suggestions.length > 0) {
+      // 첫 번째 제안 선택
+      this.selectTeam(suggestions[0].name);
+    } else {
+      // 검색 결과가 없을 때 처리
+      this.showHeroNoResults(query);
+    }
+  },
+
+  handleHeroSearch(query) {
+    if (!query.trim()) {
+      this.hideHeroSuggestions();
+      return;
+    }
+
+    const suggestions = this.getSearchSuggestions(query);
+    this.renderHeroSuggestions(suggestions);
+    this.showHeroSuggestions();
+  },
+
+  showHeroSuggestions() {
+    const suggestionsContainer = document.getElementById('hero-search-suggestions');
+    if (suggestionsContainer) {
+      suggestionsContainer.style.display = 'block';
+    }
+  },
+
+  hideHeroSuggestions() {
+    const suggestionsContainer = document.getElementById('hero-search-suggestions');
+    if (suggestionsContainer) {
+      suggestionsContainer.style.display = 'none';
+    }
+  },
+
+  renderHeroSuggestions(suggestions) {
+    const suggestionsContainer = document.getElementById('hero-search-suggestions');
+    if (!suggestionsContainer) return;
+
+    if (suggestions.length === 0) {
+      suggestionsContainer.innerHTML = `
+        <div class="suggestion-item">
+          <em>검색 결과가 없습니다</em>
+        </div>
+      `;
+      return;
+    }
+
+    const suggestionsHTML = suggestions.map(suggestion => `
+      <div class="suggestion-item" data-team-id="${suggestion.id}">
+        <div class="suggestion-content">
+          <span class="suggestion-name">${suggestion.displayText}</span>
+          <span class="suggestion-type">팀</span>
+        </div>
+      </div>
+    `).join('');
+
+    suggestionsContainer.innerHTML = suggestionsHTML;
+  },
+
+  showHeroNoResults(query) {
+    const suggestionsContainer = document.getElementById('hero-search-suggestions');
+    if (suggestionsContainer) {
+      suggestionsContainer.innerHTML = `
+        <div class="suggestion-item">
+          <em>"${query}"에 대한 검색 결과가 없습니다</em>
+        </div>
+      `;
+      this.showHeroSuggestions();
+      
+      // 3초 후 자동으로 숨김
+      setTimeout(() => {
+        this.hideHeroSuggestions();
       }, 3000);
     }
   },

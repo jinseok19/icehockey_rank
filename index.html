@@ -44,49 +44,57 @@
             <nav class="header-nav">
                 <a href="index.html" class="nav-link active">홈</a>
                 <a href="teams.html" class="nav-link">팀 목록</a>
-                <a href="matches.html" class="nav-link">경기 결과</a>
+                <a href="matches.html" class="nav-link">대회</a>
+                <a href="stats.html" class="nav-link">통계</a>
             </nav>
         </div>
     </header>
 
-    <main class="main">
-        <div class="hero-section">
-            <h1 class="hero-title">아이스하키 클럽 전적 분석</h1>
-            <p class="hero-subtitle">팀별 상대전적, 통계, 트렌드를 한눈에 확인하세요</p>
-        </div>
-
-        <section class="hot-matches">
-            <h2 class="section-title">🔥 최근 핫매치</h2>
-            <div id="hot-matches-grid" class="matches-grid">
-                <!-- 핫매치가 여기에 렌더링됩니다 -->
-            </div>
-        </section>
-
-        <section class="top-teams">
-            <h2 class="section-title">🏆 인기 팀</h2>
-            <div id="top-teams-grid" class="teams-grid">
-                <!-- 인기 팀이 여기에 렌더링됩니다 -->
-            </div>
-        </section>
-
-        <section class="all-teams">
-            <div class="section-header">
-                <h2 class="section-title">📋 전체 팀 목록</h2>
-                <div class="teams-controls">
-                    <select id="teams-sort" class="filter-select">
-                        <option value="winRate">승률순</option>
-                        <option value="name">이름순</option>
-                        <option value="region">지역순</option>
-                        <option value="ageGroup">연령대순</option>
-                        <option value="totalMatches">경기수순</option>
-                    </select>
-                    <input type="text" id="teams-search" class="search-input small" placeholder="팀명 또는 지역으로 검색">
+    <main class="main" style="display: flex; align-items: center; justify-content: center; min-height: 80vh; padding: 5rem; text-align: center; position: relative; overflow: hidden;">
+            
+            <div class="search-hero-content" style="max-width: 800px; width: 100%; position: relative; z-index: 2;">
+                <!-- 이미지 섹션 -->
+                <div class="hero-image-section" style="margin-bottom: 4rem; text-align: center;">
+                    <div class="image-container" style="max-width: 400px; margin: 0 auto; padding: 2rem; background: rgba(55, 65, 81, 0.3); border: 2px dashed #4b5563; border-radius: 16px; transition: all 0.3s ease;">
+                        <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #374151, #4b5563); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <div style="text-align: center; color: #9ca3af;">
+                                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🏒</div>
+                                <div style="font-size: 1rem; font-weight: 500;">아이스하키 이미지</div>
+                                <div style="font-size: 0.8rem; margin-top: 0.25rem; opacity: 0.7;">400x200px 권장</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #9ca3af; line-height: 1.5;">
+                            여기에 팀 로고, 선수 사진, 또는<br>
+                            아이스하키 관련 이미지를 넣으세요
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- 검색 섹션을 위로 -->
+                <div class="hero-search-container" style="margin-bottom: 10rem;">
+                    <div class="hero-search-wrapper" style="position: relative; max-width: 700px; margin: 0 auto; display: flex; gap: 1rem; align-items: center;">
+                        <!-- 지역 선택 -->
+                        <select style="padding: 1rem 1.5rem; background: #374151; color: #e5e7eb; border: 1px solid #4b5563; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">
+                            <option value="korea">전국</option>
+                            <option value="seoul">서울</option>
+                            <option value="busan">부산</option>
+                            <option value="daegu">대구</option>
+                        </select>
+                        
+                        <!-- 검색 입력 -->
+                        <div style="position: relative; flex: 1;">
+                            <input type="text" id="hero-search" class="hero-search-input" placeholder="팀명을 검색하세요 (예: 레오파즈)" style="width: 100%; padding: 1rem 4rem 1rem 1.5rem; font-size: 1.1rem; border: 1px solid #4b5563; border-radius: 8px; background: #374151; color: #e5e7eb; transition: all 0.2s ease; font-weight: 500;">
+                            <button class="hero-search-btn" aria-label="검색" style="position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); background: #3b82f6; color: white; border: none; border-radius: 6px; padding: 0.75rem 1.5rem; cursor: pointer; transition: all 0.2s ease; font-weight: 600; font-size: 0.9rem;">
+                                검색
+                            </button>
+                            <div id="hero-search-suggestions" class="hero-search-suggestions" style="position: absolute; top: 100%; left: 0; right: 0; background: #1f2937; border: 1px solid #4b5563; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 1000; max-height: 300px; overflow-y: auto; margin-top: 0.5rem; display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+               
             </div>
-            <div id="all-teams-grid" class="teams-grid">
-                <!-- 전체 팀이 여기에 렌더링됩니다 -->
-            </div>
-        </section>
+        </div>
     </main>
 
     <footer class="footer">
