@@ -3,48 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>팀 상세 - 아이스하키 랭킹</title>
+    <title>팀 상세 - 아이스하키 클럽 랭킹</title>
     <meta name="description" content="아이스하키 팀 상세 정보 및 상대전적 분석">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo">
-                <a href="/" class="logo-link">
-                    <img src="assets/img/logo.svg" alt="아이스하키 랭킹" class="logo-img">
-                    <span class="logo-text">아이스하키 랭킹</span>
-                </a>
-            </div>
-            
-            <div class="search-container">
-                <div class="search-wrapper">
-                    <input type="text" id="global-search" class="search-input" placeholder="팀명을 검색하세요 (예: 레오파즈)">
-                    <button class="search-btn" aria-label="검색">
-                        <i data-lucide="search"></i>
-                    </button>
-                    <div id="search-suggestions" class="search-suggestions"></div>
-                </div>
-            </div>
-
-            <div class="header-filters">
-                <select id="season-filter" class="filter-select">
-                    <option value="2024">2024 시즌</option>
-                    <option value="2023">2023 시즌</option>
-                </select>
-                <select id="age-filter" class="filter-select">
-                    <option value="all">전 연령대</option>
-                    <option value="U18">U18</option>
-                    <option value="U15">U15</option>
-                    <option value="U12">U12</option>
-                    <option value="U10">U10</option>
-                </select>
-            </div>
-        </div>
-    </header>
-
     <nav class="page-navigation">
         <div class="nav-container">
             <div class="breadcrumb">
@@ -103,42 +68,19 @@
 
                 <!-- 상대전적 탭 -->
                 <div id="h2h-panel" class="tab-panel">
-                    <div class="h2h-container">
-                        <!-- H2H 데이터가 여기에 렌더링됩니다 -->
+                    <h3>상대전적</h3>
+                    <div class="h2h-content">
+                        <!-- 상대전적이 여기에 렌더링됩니다 -->
                     </div>
-                </div>
-            </div>
-
-            <!-- 상대팀 패널 -->
-            <div class="opponents-panel">
-                <div class="opponents-header">
-                    <h3>상대팀 목록</h3>
-                    <div class="opponents-filters">
-                        <select id="opponents-sort" class="filter-select">
-                            <option value="recent">최근 경기순</option>
-                            <option value="winRate">승률순</option>
-                            <option value="name">이름순</option>
-                            <option value="region">지역순</option>
-                        </select>
-                        <input type="text" id="opponents-search" class="search-input small" placeholder="상대팀 검색">
-                    </div>
-                </div>
-                
-                <div class="opponents-list">
-                    <!-- 상대팀 목록이 여기에 렌더링됩니다 -->
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2024 아이스하키 랭킹. 모든 데이터는 참고용입니다.</p>
-    </footer>
-
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/app.js"></script>
     <script src="js/search.js"></script>
     <script src="js/team.js"></script>
-    <script src="js/h2h.js"></script>
 </body>
 </html>

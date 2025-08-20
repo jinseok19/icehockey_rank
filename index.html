@@ -10,98 +10,188 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo">
-                <img src="assets/img/logo.svg" alt="아이스하키 랭킹" class="logo-img">
-                <span class="logo-text">아이스하키 랭킹</span>
-            </div>
+    <main class="main" style="min-height: 100vh; background: #000000; color: #ffffff; position: relative;">
+        <!-- 히어로 섹션 -->
+        <section class="hero-section" style="padding: 8rem 2rem 6rem; text-align: center; background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%); position: relative; overflow: hidden;">
+            <!-- 배경 패턴 -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.02) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.02) 0%, transparent 50%);"></div>
             
-            <div class="search-container">
-                <div class="search-wrapper">
-                    <input type="text" id="global-search" class="search-input" placeholder="팀명을 검색하세요 (예: 레오파즈)">
-                    <button class="search-btn" aria-label="검색">
-                        <i data-lucide="search"></i>
-                    </button>
-                    <div id="search-suggestions" class="search-suggestions"></div>
-                </div>
-            </div>
-
-            <div class="header-filters">
-                <select id="season-filter" class="filter-select">
-                    <option value="2024">2024 시즌</option>
-                    <option value="2023">2023 시즌</option>
-                </select>
-                <select id="age-filter" class="filter-select">
-                    <option value="all">전 연령대</option>
-                    <option value="U18">U18</option>
-                    <option value="U15">U15</option>
-                    <option value="U12">U12</option>
-                    <option value="U10">U10</option>
-                </select>
-            </div>
-
-            <nav class="header-nav">
-                <a href="index.html" class="nav-link active">홈</a>
-                <a href="teams.html" class="nav-link">팀 목록</a>
-                <a href="matches.html" class="nav-link">대회</a>
-                <a href="stats.html" class="nav-link">통계</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="main" style="display: flex; align-items: center; justify-content: center; min-height: 80vh; padding: 5rem; text-align: center; position: relative; overflow: hidden;">
-            
-            <div class="search-hero-content" style="max-width: 800px; width: 100%; position: relative; z-index: 2;">
-                <!-- 이미지 섹션 -->
-                <div class="hero-image-section" style="margin-bottom: 4rem; text-align: center;">
-                    <div class="image-container" style="max-width: 400px; margin: 0 auto; padding: 2rem; background: rgba(55, 65, 81, 0.3); border: 2px dashed #4b5563; border-radius: 16px; transition: all 0.3s ease;">
-                        <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #374151, #4b5563); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <div style="text-align: center; color: #9ca3af;">
-                                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🏒</div>
-                                <div style="font-size: 1rem; font-weight: 500;">아이스하키 이미지</div>
-                                <div style="font-size: 0.8rem; margin-top: 0.25rem; opacity: 0.7;">400x200px 권장</div>
-                            </div>
-                        </div>
-                        <div style="font-size: 0.9rem; color: #9ca3af; line-height: 1.5;">
-                            여기에 팀 로고, 선수 사진, 또는<br>
-                            아이스하키 관련 이미지를 넣으세요
-                        </div>
-                    </div>
+            <div class="hero-content" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;">
+                <!-- 메인 타이틀 -->
+                <div class="hero-text" style="margin-bottom: 3rem;">
+                    <h1 style="font-size: clamp(3rem, 6vw, 5rem); font-weight: 300; color: #ffffff; margin-bottom: 2rem; letter-spacing: -0.03em; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.1;">
+                        ICE HOCKEY
+                        <br>
+                        <span style="font-weight: 700; color: #f8fafc; display: block; margin-top: 0.5rem;">ANALYTICS</span>
+                    </h1>
+                    <p style="font-size: 1.5rem; color: #cbd5e1; font-weight: 400; max-width: 700px; margin: 0 auto; line-height: 1.6;">
+                        프로페셔널한 아이스하키 팀 성과 분석 및 통계 플랫폼
+                    </p>
                 </div>
                 
-                <!-- 검색 섹션을 위로 -->
-                <div class="hero-search-container" style="margin-bottom: 10rem;">
-                    <div class="hero-search-wrapper" style="position: relative; max-width: 700px; margin: 0 auto; display: flex; gap: 1rem; align-items: center;">
-                        <!-- 지역 선택 -->
-                        <select style="padding: 1rem 1.5rem; background: #374151; color: #e5e7eb; border: 1px solid #4b5563; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">
-                            <option value="korea">전국</option>
-                            <option value="seoul">서울</option>
-                            <option value="busan">부산</option>
-                            <option value="daegu">대구</option>
-                        </select>
-                        
-                        <!-- 검색 입력 -->
-                        <div style="position: relative; flex: 1;">
-                            <input type="text" id="hero-search" class="hero-search-input" placeholder="팀명을 검색하세요 (예: 레오파즈)" style="width: 100%; padding: 1rem 4rem 1rem 1.5rem; font-size: 1.1rem; border: 1px solid #4b5563; border-radius: 8px; background: #374151; color: #e5e7eb; transition: all 0.2s ease; font-weight: 500;">
-                            <button class="hero-search-btn" aria-label="검색" style="position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); background: #3b82f6; color: white; border: none; border-radius: 6px; padding: 0.75rem 1.5rem; cursor: pointer; transition: all 0.2s ease; font-weight: 600; font-size: 0.9rem;">
-                                검색
-                            </button>
-                            <div id="hero-search-suggestions" class="hero-search-suggestions" style="position: absolute; top: 100%; left: 0; right: 0; background: #1f2937; border: 1px solid #4b5563; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 1000; max-height: 300px; overflow-y: auto; margin-top: 0.5rem; display: none;"></div>
-                        </div>
+                <!-- 히어로 통계 -->
+                <div class="hero-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 800px; margin: 0 auto;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">24</div>
+                        <div style="color: #cbd5e1; font-size: 0.95rem;">등록된 팀</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">156</div>
+                        <div style="color: #cbd5e1; font-size: 0.95rem;">총 경기</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">89.2%</div>
+                        <div style="color: #cbd5e1; font-size: 0.95rem;">데이터 정확도</div>
                     </div>
                 </div>
-                
-               
             </div>
-        </div>
+        </section>
+
+        <!-- 통계 오버뷰 섹션 -->
+        <section class="stats-overview" style="padding: 4rem 2rem; background: #0a0a0a;">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <h2 style="font-size: 2rem; font-weight: 600; color: #ffffff; text-align: center; margin-bottom: 3rem; font-family: 'Inter', sans-serif;">
+                    시즌 통계 요약
+                </h2>
+                
+                <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+                    <div class="stat-card" style="background: #111111; border: 1px solid #1e293b; border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">24</div>
+                        <div style="font-size: 1rem; color: #cbd5e1; font-weight: 500;">등록된 팀</div>
+                        <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">2024 시즌</div>
+                    </div>
+                    
+                    <div class="stat-card" style="background: #111111; border: 1px solid #1e293b; border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">156</div>
+                        <div style="font-size: 1rem; color: #cbd5e1; font-weight: 500;">총 경기</div>
+                        <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">진행 완료</div>
+                    </div>
+                    
+                    <div class="stat-card" style="background: #111111; border: 1px solid #1e293b; border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">3.2</div>
+                        <div style="font-size: 1rem; color: #cbd5e1; font-weight: 500;">평균 득점</div>
+                        <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">경기당</div>
+                    </div>
+                    
+                    <div class="stat-card" style="background: #111111; border: 1px solid #1e293b; border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">89.2%</div>
+                        <div style="font-size: 1rem; color: #cbd5e1; font-weight: 500;">데이터 정확도</div>
+                        <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">실시간 업데이트</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 주요 기능 섹션 -->
+        <section class="features-section" style="padding: 4rem 2rem; background: #000000;">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <h2 style="font-size: 2rem; font-weight: 600; color: #ffffff; text-align: center; margin-bottom: 3rem; font-family: 'Inter', sans-serif;">
+                    핵심 기능
+                </h2>
+                
+                <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+                    <div class="feature-item" style="background: #0a0a0a; border: 1px solid #1e293b; border-radius: 12px; padding: 2.5rem; transition: all 0.3s ease;">
+                        <div style="width: 48px; height: 48px; background: #111111; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ffffff;">
+                                <path d="M3 3v18h18"/>
+                                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem;">팀 성과 분석</h3>
+                        <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 1.5rem;">
+                            상세한 팀 통계, 선수별 성과, 시즌별 트렌드를 종합적으로 분석하여 
+                            데이터 기반의 인사이트를 제공합니다.
+                        </p>
+                        <a href="teams.html" style="color: #ffffff; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            자세히 보기
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="feature-item" style="background: #0a0a0a; border: 1px solid #1e293b; border-radius: 12px; padding: 2.5rem; transition: all 0.3s ease;">
+                        <div style="width: 48px; height: 48px; background: #111111; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ffffff;">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem;">상대전적 분석</h3>
+                        <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 1.5rem;">
+                            팀 간 맞대결 기록, 승률 분석, 전술적 패턴을 깊이 있게 분석하여 
+                            경기 전략 수립에 도움을 드립니다.
+                        </p>
+                        <a href="h2h.html" style="color: #ffffff; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            자세히 보기
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="feature-item" style="background: #0a0a0a; border: 1px solid #1e293b; border-radius: 12px; padding: 2.5rem; transition: all 0.3s ease;">
+                        <div style="width: 48px; height: 48px; background: #111111; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ffffff;">
+                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                                <path d="M6 2v2"/>
+                                <path d="M6 15H4.5a2.5 0 0 0 0 5H6"/>
+                                <path d="M6 22v-2"/>
+                                <path d="M2 6h2"/>
+                                <path d="M2 6v2"/>
+                                <path d="M22 6h-2"/>
+                                <path d="M22 6v2"/>
+                                <path d="M2 18h2"/>
+                                <path d="M2 18v-2"/>
+                                <path d="M22 18h-2"/>
+                                <path d="M22 18v-2"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem;">실시간 랭킹</h3>
+                        <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 1.5rem;">
+                            실시간으로 업데이트되는 팀 랭킹, 승점, 골득실을 확인하고 
+                            시즌 진행 상황을 한눈에 파악할 수 있습니다.
+                        </p>
+                        <a href="teams.html" style="color: #ffffff; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            자세히 보기
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA 섹션 -->
+        <section class="cta-section" style="padding: 5rem 2rem; background: #0a0a0a; text-align: center;">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h2 style="font-size: 2.5rem; font-weight: 600; color: #ffffff; margin-bottom: 1.5rem; font-family: 'Inter', sans-serif;">
+                    지금 시작하세요
+                </h2>
+                <p style="font-size: 1.125rem; color: #cbd5e1; margin-bottom: 2.5rem; line-height: 1.6;">
+                    프로페셔널한 아이스하키 데이터 분석으로 더 나은 전략을 세우고, 
+                    팀의 성과를 향상시켜보세요.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <a href="teams.html" style="background: #ffffff; color: #000000; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 1px solid #ffffff;">
+                        팀 목록 보기
+                    </a>
+                    <a href="stats.html" style="background: transparent; color: #ffffff; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 1px solid #ffffff;">
+                        통계 분석
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2024 아이스하키 랭킹. 모든 데이터는 참고용입니다.</p>
-    </footer>
-
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/app.js"></script>
     <script src="js/search.js"></script>
 </body>
