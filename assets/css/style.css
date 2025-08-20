@@ -340,7 +340,7 @@ body {
   position: sticky;
   top: 0;
   background-color: #000000;
-  border-bottom: 1px solid #1e293b;
+  border-bottom: 1px solid #919497; /* Changed from #1e293b to gold */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   z-index: 100;
 }
