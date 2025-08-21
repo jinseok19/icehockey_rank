@@ -12,7 +12,7 @@
 <body style="background: #000000; color: #ffffff; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;">
     <main class="main" style="min-height: 100vh; background: #000000; color: #ffffff; position: relative;">
         <!-- 히어로 섹션 -->
-        <section class="hero-section" style="padding: 6rem 2rem 4rem; text-align: center; background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%); position: relative; overflow: hidden;">
+        <section class="hero-section" style="padding: 3rem 2rem 2rem; text-align: center; background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%); position: relative; overflow: hidden;">
             <!-- 배경 패턴 -->
             <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.02) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.02) 0%, transparent 50%);"></div>
             
@@ -27,26 +27,57 @@
         </section>
 
         <!-- 팀 목록 섹션 -->
-        <section class="all-teams" style="padding: 4rem 2rem; background: #0a0a0a;">
+        <section class="all-teams" style="padding: 1rem 1rem; background: #0a0a0a;">
             <div style="max-width: 1200px; margin: 0 auto;">
-                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;">
-                    <h2 style="font-size: 2rem; font-weight: 600; color: #ffffff; margin: 0;">
-                        📋 전체 팀 목록
-                    </h2>
-                    <div class="teams-controls" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                        <select id="teams-sort" class="filter-select" style="padding: 0.75rem 1rem; border: 1px solid #1e293b; border-radius: 8px; background-color: #0a0a0a; color: #ffffff; font-size: 0.875rem; cursor: pointer; transition: border-color 0.3s; min-width: 120px;">
-                            <option value="winRate">승률순</option>
-                            <option value="name">이름순</option>
-                            <option value="region">지역순</option>
-                            <option value="ageGroup">연령대순</option>
-                            <option value="totalMatches">경기수순</option>
-                        </select>
-                        <input type="text" id="teams-search" class="search-input small" placeholder="팀명 또는 지역으로 검색" style="padding: 0.75rem 1rem; border: 1px solid #1e293b; border-radius: 8px; background-color: #0a0a0a; color: #ffffff; font-size: 0.875rem; transition: border-color 0.3s; min-width: 200px;">
+                <!-- 향상된 필터 및 검색 컨트롤 -->
+                <div class="teams-controls" style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; background: #111111; border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;">
+                    <!-- 검색바 -->
+                    <div style="flex: 1; min-width: 300px;">
+                        <div style="position: relative;">
+                            <input type="text" id="teams-search" placeholder="팀명 또는 지역으로 검색" 
+                                   style="width: 100%; padding: 1rem 1rem 1rem 3rem; border: 1px solid #404040; border-radius: 12px; background-color: #1a1a1a; color: #e5e5e5; font-size: 1rem; font-weight: 500; transition: all 0.3s ease;">
+                            <svg style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: #888888;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </div>
                     </div>
+                    
+                    <!-- 필터 토글 버튼들 -->
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; background: #1a1a1a; border: 1px solid #404040; border-radius: 12px; padding: 0.5rem;">
+                        <button class="filter-btn active" data-filter="all" style="padding: 0.75rem 1.5rem; background: #ffffff; color: #000000; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);">
+                            전체
+                        </button>
+                        <button class="filter-btn" data-filter="서울" style="padding: 0.75rem 1.5rem; background: transparent; color: #cccccc; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                            서울
+                        </button>
+                        <button class="filter-btn" data-filter="부산" style="padding: 0.75rem 1.5rem; background: transparent; color: #cccccc; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                            부산
+                        </button>
+                        <button class="filter-btn" data-filter="대구" style="padding: 0.75rem 1.5rem; background: transparent; color: #cccccc; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                            대구
+                        </button>
+                        <button class="filter-btn" data-filter="인천" style="padding: 0.75rem 1.5rem; background: transparent; color: #cccccc; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                            인천
+                        </button>
+                        <button class="filter-btn" data-filter="clear" style="padding: 0.75rem 1.5rem; background: transparent; color: #888888; border: 1px solid #404040; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                            ✕ 초기화
+                        </button>
+                    </div>
+                    
+                    <!-- 정렬 드롭다운 -->
+                    <select id="teams-sort" style="padding: 0.75rem 1rem; border: 1px solid #404040; border-radius: 8px; background-color: #1a1a1a; color: #e5e5e5; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; min-width: 140px;">
+                        <option value="winRate">승률순</option>
+                        <option value="name">이름순</option>
+                        <option value="region">지역순</option>
+                        <option value="ageGroup">연령대순</option>
+                        <option value="totalMatches">경기수순</option>
+                    </select>
                 </div>
                 
-                <div id="all-teams-grid" class="teams-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
-                    <!-- 전체 팀이 여기에 렌더링됩니다 -->
+                <!-- 팀 카드 그리드 -->
+                <div id="all-teams-grid" class="teams-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2.5rem;">
+                    <!-- 전체 팀이 여기에 렌더링됩니다 (JavaScript로 동적 생성) -->
                 </div>
             </div>
         </section>
@@ -56,5 +87,412 @@
     <script src="js/common.js"></script>
     <script src="js/app.js"></script>
     <script src="js/search.js"></script>
+
+    <style>
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .team-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+                .filter-btn:hover {
+            background: #ffffff !important;
+            color: #000000 !important;
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        .filter-btn.active {
+            background: #ffffff !important;
+            color: #000000 !important;
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        .filter-btn[data-filter="clear"]:hover {
+            background: #404040 !important;
+            color: #ffffff !important;
+            border-color: #404040 !important;
+        }
+        
+        #teams-search::placeholder {
+            color: #888888;
+            opacity: 1;
+        }
+        
+        #teams-search:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+        
+        #teams-sort:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+        
+        .teams-grid {
+            display: grid;
+            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
+        
+        @media (max-width: 768px) {
+            .teams-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .team-card {
+                padding: 1.5rem !important;
+            }
+            
+            .teams-controls {
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+            
+            .teams-controls > div:first-child {
+                min-width: auto !important;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .teams-grid {
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            }
+        }
+    </style>
+
+    <script>
+        // 더미 팀 데이터
+        const teamsData = [
+            {
+                id: 1,
+                name: "레오파즈",
+                region: "서울",
+                ageGroup: "U16",
+                winRate: 78.5,
+                totalMatches: 24,
+                wins: 19,
+                losses: 4,
+                draws: 1,
+                avgScore: 3.2,
+                recentMatches: ['W', 'L', 'W', 'D', 'W'],
+                founded: 2010,
+                logo: "레"
+            },
+            {
+                id: 2,
+                name: "타이거스",
+                region: "부산",
+                ageGroup: "U18",
+                winRate: 67.3,
+                totalMatches: 52,
+                wins: 35,
+                losses: 9,
+                draws: 8,
+                avgScore: 1.50,
+                recentMatches: ['W', 'D', 'W', 'W', 'L'],
+                founded: 2016,
+                logo: "타"
+            },
+            {
+                id: 3,
+                name: "이글스",
+                region: "대구",
+                ageGroup: "U12",
+                winRate: 57.9,
+                totalMatches: 38,
+                wins: 22,
+                losses: 10,
+                draws: 6,
+                avgScore: 1.76,
+                recentMatches: ['L', 'W', 'W', 'D', 'W'],
+                founded: 2020,
+                logo: "이"
+            },
+            {
+                id: 4,
+                name: "베어스",
+                region: "인천",
+                ageGroup: "U15",
+                winRate: 57.1,
+                totalMatches: 42,
+                wins: 24,
+                losses: 11,
+                draws: 7,
+                avgScore: 1.69,
+                recentMatches: ['W', 'L', 'D', 'W', 'L'],
+                founded: 2019,
+                logo: "베"
+            },
+            {
+                id: 5,
+                name: "샤크스",
+                region: "울산",
+                ageGroup: "U10",
+                winRate: 51.4,
+                totalMatches: 35,
+                wins: 18,
+                losses: 9,
+                draws: 8,
+                avgScore: 1.49,
+                recentMatches: ['D', 'W', 'L', 'W', 'D'],
+                founded: 2021,
+                logo: "샤"
+            },
+            {
+                id: 6,
+                name: "드래곤스",
+                region: "광주",
+                ageGroup: "U18",
+                winRate: 62.5,
+                totalMatches: 48,
+                wins: 30,
+                losses: 12,
+                draws: 6,
+                avgScore: 1.98,
+                recentMatches: ['W', 'W', 'L', 'D', 'W'],
+                founded: 2017,
+                logo: "드"
+            },
+            {
+                id: 7,
+                name: "라이온스",
+                region: "대전",
+                ageGroup: "U12",
+                winRate: 53.6,
+                totalMatches: 28,
+                wins: 15,
+                losses: 9,
+                draws: 4,
+                avgScore: 1.61,
+                recentMatches: ['W', 'L', 'W', 'D', 'L'],
+                founded: 2022,
+                logo: "라"
+            },
+            {
+                id: 8,
+                name: "팔콘스",
+                region: "제주",
+                ageGroup: "U15",
+                winRate: 50.0,
+                totalMatches: 32,
+                wins: 16,
+                losses: 10,
+                draws: 6,
+                avgScore: 1.50,
+                recentMatches: ['L', 'W', 'D', 'W', 'L'],
+                founded: 2020,
+                logo: "팔"
+            }
+        ];
+
+        // 팀 카드 렌더링 함수
+        function renderTeamCard(team) {
+            const colors = [
+                { bg: 'linear-gradient(135deg, #3b82f6, #60a5fa)', border: '#3b82f6', text: '#ffffff', stats: '#3b82f6' },
+                { bg: 'linear-gradient(135deg, #10b981, #34d399)', border: '#10b981', text: '#ffffff', stats: '#10b981' },
+                { bg: 'linear-gradient(135deg, #f59e0b, #fbbf24)', border: '#f59e0b', text: '#000000', stats: '#f59e0b' },
+                { bg: 'linear-gradient(135deg, #ef4444, #f87171)', border: '#ef4444', text: '#ffffff', stats: '#ef4444' },
+                { bg: 'linear-gradient(135deg, #8b5cf6, #a78bfa)', border: '#8b5cf6', text: '#ffffff', stats: '#8b5cf6' },
+                { bg: 'linear-gradient(135deg, #06b6d4, #67e8f9)', border: '#06b6d4', text: '#000000', stats: '#06b6d4' }
+            ];
+            const color = colors[team.id % colors.length];
+            
+            const recentMatchesHtml = team.recentMatches.map(result => {
+                const bgColor = result === 'W' ? '#10b981' : result === 'L' ? '#ef4444' : '#f59e0b';
+                const textColor = '#ffffff';
+                return `<div style="width: 28px; height: 28px; background: ${bgColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: ${textColor}; font-weight: 700; box-shadow: 0 2px 8px rgba(${result === 'W' ? '16, 185, 129' : result === 'L' ? '239, 68, 68' : '245, 158, 11'}, 0.3);">${result}</div>`;
+            }).join('');
+
+            return `
+                <div class="team-card" style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 2.5rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; cursor: pointer;" data-region="${team.region}" data-age="${team.ageGroup}">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: ${color.bg}; background-size: 200% 100%; animation: shimmer 3s ease-in-out infinite;"></div>
+                    
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+                        <div style="width: 80px; height: 80px; background: ${color.bg}; border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.4); flex-shrink: 0;">
+                            <span style="font-size: 2rem; font-weight: 800; color: ${color.text}; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${team.logo}</span>
+                        </div>
+                        <div style="flex: 1; min-width: 0;">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0; margin-bottom: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${team.name}</h3>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                                <span style="background: rgba(255, 255, 255, 0.1); color: #e5e5e5; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; border: 1px solid #404040; white-space: nowrap;">${team.region}</span>
+                                <span style="background: rgba(255, 255, 255, 0.05); color: #cccccc; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; border: 1px solid #2a2a2a; white-space: nowrap;">${team.ageGroup}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; margin-bottom: 2rem; align-items: stretch;">
+                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.1); border-radius: 12px; border: 1px solid rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.3); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
+                            <div style="font-size: 1.6rem; font-weight: 800; color: ${color.stats}; margin-bottom: 0.3rem; line-height: 1;">${team.winRate}%</div>
+                            <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500; line-height: 1; white-space: nowrap;">승률</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.08); border-radius: 12px; border: 1px solid rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.25); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
+                            <div style="font-size: 1.6rem; font-weight: 800; color: ${color.stats}; margin-bottom: 0.3rem; line-height: 1;">${team.totalMatches}</div>
+                            <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500; line-height: 1; white-space: nowrap;">총 경기</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.06); border-radius: 12px; border: 1px solid rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.2); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
+                            <div style="font-size: 1.6rem; font-weight: 800; color: ${color.stats}; margin-bottom: 0.3rem; line-height: 1;">${team.avgScore}</div>
+                            <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500; line-height: 1; white-space: nowrap;">평균득점</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">최근 경기</h4>
+                        <div style="display: flex; gap: 0.6rem; justify-content: flex-start; align-items: center;">
+                            ${recentMatchesHtml}
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; align-items: stretch;">
+                        <a href="team.html?id=${team.id}" style="flex: 1; text-align: center; padding: 1rem; background: ${color.bg}; color: ${color.text}; text-decoration: none; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.3); display: flex; align-items: center; justify-content: center; min-height: 50px; white-space: nowrap;">
+                            상세 보기
+                        </a>
+                        <a href="h2h.html?team1=${team.id}" style="flex: 1; text-align: center; padding: 1rem; background: transparent; color: ${color.stats}; text-decoration: none; border: 2px solid ${color.stats}; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; min-height: 50px; white-space: nowrap;">
+                            H2H
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 팀 목록 렌더링
+        function renderTeams(teams = teamsData) {
+            const grid = document.getElementById('all-teams-grid');
+            grid.innerHTML = teams.map(team => renderTeamCard(team)).join('');
+        }
+
+        // 팀 필터링
+        function filterTeams(region = null, searchTerm = '') {
+            let filteredTeams = teamsData;
+            
+            // 지역 필터링
+            if (region && region !== 'all' && region !== null) {
+                filteredTeams = filteredTeams.filter(team => 
+                    team.region.toLowerCase() === region.toLowerCase()
+                );
+            }
+            
+            // 검색어 필터링
+            if (searchTerm && searchTerm.trim() !== '') {
+                filteredTeams = filteredTeams.filter(team =>
+                    team.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    team.region.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            return filteredTeams;
+        }
+
+        // 팀 정렬
+        function sortTeams(teams, sortBy) {
+            const sorted = [...teams];
+            
+            switch(sortBy) {
+                case 'winRate':
+                    return sorted.sort((a, b) => b.winRate - a.winRate);
+                case 'name':
+                    return sorted.sort((a, b) => a.name.localeCompare(b.name));
+                case 'region':
+                    return sorted.sort((a, b) => a.region.localeCompare(b.region));
+                case 'ageGroup':
+                    return sorted.sort((a, b) => a.ageGroup.localeCompare(b.ageGroup));
+                case 'totalMatches':
+                    return sorted.sort((a, b) => b.totalMatches - a.totalMatches);
+                default:
+                    return sorted;
+            }
+        }
+
+        // 필터 버튼 상호작용
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            let currentFilter = 'all';
+            let currentSearchTerm = '';
+            
+
+            
+            // 검색 입력 이벤트
+            const searchInput = document.getElementById('teams-search');
+            searchInput.addEventListener('input', function() {
+                currentSearchTerm = this.value;
+                updateTeamList();
+            });
+            
+            // 정렬 변경 이벤트
+            const sortSelect = document.getElementById('teams-sort');
+            sortSelect.addEventListener('change', function() {
+                updateTeamList();
+            });
+            
+            // 팀 목록 업데이트 함수
+            function updateTeamList() {
+                const sortBy = sortSelect.value;
+                
+                // 필터링 (currentFilter가 'all'이면 null로 처리)
+                const filterValue = currentFilter === 'all' ? null : currentFilter;
+                let filteredTeams = filterTeams(filterValue, currentSearchTerm);
+                
+                // 정렬
+                const sortedTeams = sortTeams(filteredTeams, sortBy);
+                
+                // 렌더링
+                renderTeams(sortedTeams);
+                
+                // 결과 표시
+                const resultCount = sortedTeams.length;
+                console.log(`${resultCount}개 팀 표시 (필터: ${currentFilter}, 검색: ${currentSearchTerm || '없음'}, 정렬: ${sortBy})`);
+            }
+            
+            // 필터 버튼 이벤트 리스너
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    
+                    console.log('클릭된 필터:', filter); // 디버깅용
+                    
+                    if (filter === 'clear') {
+                        // 초기화 버튼
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        // '전체' 버튼을 다시 활성화
+                        const allBtn = document.querySelector('[data-filter="all"]');
+                        if (allBtn) allBtn.classList.add('active');
+                        currentFilter = 'all';
+                        updateTeamList();
+                        return;
+                    }
+                    
+                    if (filter === currentFilter && this.classList.contains('active')) {
+                        // 같은 필터를 다시 클릭하면 해제하고 '전체'로 복귀
+                        this.classList.remove('active');
+                        const allBtn = document.querySelector('[data-filter="all"]');
+                        if (allBtn) allBtn.classList.add('active');
+                        currentFilter = 'all';
+                    } else {
+                        // 새로운 필터 선택
+                        filterBtns.forEach(b => {
+                            if (b.dataset.filter !== 'clear') {
+                                b.classList.remove('active');
+                            }
+                        });
+                        this.classList.add('active');
+                        currentFilter = filter;
+                    }
+                    
+                    console.log('현재 필터:', currentFilter); // 디버깅용
+                    updateTeamList();
+                });
+            });
+            
+            // 초기 렌더링
+            renderTeams();
+        });
+    </script>
 </body>
 </html>

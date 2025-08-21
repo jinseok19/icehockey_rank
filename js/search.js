@@ -61,10 +61,62 @@ const SearchManager = {
     }
 
     // 검색 제안 클릭 이벤트
+    const self = this;
     document.addEventListener('click', (e) => {
-      if (e.target.matches('.suggestion-item')) {
-        const teamName = e.target.textContent;
-        this.selectTeam(teamName);
+      console.log('클릭 이벤트 발생:', e.target); // 디버깅용
+      console.log('클릭된 요소 클래스:', e.target.className); // 디버깅용
+      
+      const suggestionItem = e.target.closest('.suggestion-item');
+      if (suggestionItem) {
+        e.preventDefault(); // 기본 동작 방지
+        e.stopPropagation(); // 이벤트 버블링 방지
+        
+        console.log('클릭된 제안 요소:', suggestionItem); // 디버깅용
+        console.log('suggestion-item HTML:', suggestionItem.outerHTML); // 디버깅용
+        
+        // data-team-id 추출 (여러 방법 시도)
+        let teamId = suggestionItem.getAttribute('data-team-id') || 
+                     suggestionItem.dataset.teamId ||
+                     suggestionItem.getAttribute('data-team-id');
+                     
+        console.log('추출된 팀 ID (방법 1):', teamId); // 디버깅용
+        console.log('dataset:', suggestionItem.dataset); // 디버깅용
+        
+        // 팀 ID가 없으면 텍스트에서 추출 시도
+        if (!teamId) {
+          const text = suggestionItem.textContent.trim();
+          console.log('텍스트에서 팀 ID 추출 시도:', text);
+          
+          // 팀 이름으로 ID 찾기 (실제 팀명 기준)
+          const teamMappings = {
+            '레오파즈': 1,    // 서울 레오파즈
+            '타이거스': 2,    // 부산 타이거스
+            '이글스': 3,      // 대구 이글스
+            '베어스': 4,      // 인천 베어스
+            '샤크스': 5,      // 울산 샤크스
+            '드래곤스': 6,    // 광주 드래곤스
+            '라이온스': 7,    // 대전 라이온스
+            '팔콘스': 8       // 제주 팔콘스
+          };
+          
+          for (const [name, id] of Object.entries(teamMappings)) {
+            if (text.includes(name)) {
+              teamId = id;
+              console.log(`텍스트 "${text}"에서 팀 "${name}" 발견, ID: ${id}`);
+              break;
+            }
+          }
+        }
+        
+        console.log('최종 팀 ID:', teamId); // 디버깅용
+        
+        if (teamId) {
+          console.log('팀 상세 페이지로 이동 시도');
+          self.selectTeamById(teamId);
+        } else {
+          console.error('팀 ID를 찾을 수 없습니다');
+          alert('팀을 찾을 수 없습니다. 다시 시도해주세요.');
+        }
       }
     });
 
@@ -104,49 +156,160 @@ const SearchManager = {
     const term = query.toLowerCase();
     const suggestions = [];
 
+    console.log('검색어:', term); // 디버깅용
+    console.log('AppState.teams:', AppState.teams); // 디버깅용
+    console.log('팀 개수:', AppState.teams?.length); // 디버깅용
+
+    // AppState.teams가 비어있거나 올바르지 않은 경우 대체 데이터 사용
+    let teamsToSearch = AppState.teams;
+    if (!teamsToSearch || teamsToSearch.length === 0) {
+      console.log('AppState.teams가 비어있음, 대체 데이터 사용');
+      teamsToSearch = [
+        {
+          id: 1,
+          name: "레오파즈",
+          fullName: "서울 레오파즈",
+          region: "서울",
+          ageGroup: "U16"
+        },
+        {
+          id: 2,
+          name: "타이거스",
+          fullName: "부산 타이거스",
+          region: "부산",
+          ageGroup: "U18"
+        },
+        {
+          id: 3,
+          name: "이글스",
+          fullName: "대구 이글스",
+          region: "대구",
+          ageGroup: "U12"
+        },
+        {
+          id: 4,
+          name: "베어스",
+          fullName: "인천 베어스",
+          region: "인천",
+          ageGroup: "U15"
+        },
+        {
+          id: 5,
+          name: "아이스드래곤즈",
+          fullName: "서울 아이스드래곤즈",
+          region: "서울",
+          ageGroup: "U16"
+        },
+        {
+          id: 6,
+          name: "프로스트울브즈",
+          fullName: "부산 프로스트울브즈",
+          region: "부산",
+          ageGroup: "U18"
+        }
+      ];
+    }
+
     // 팀명으로 검색
-    AppState.teams.forEach(team => {
-      if (team.name.toLowerCase().includes(term) || 
-          team.fullName.toLowerCase().includes(term)) {
-        suggestions.push({
+    teamsToSearch.forEach(team => {
+      const teamNameMatch = team.name.toLowerCase().includes(term);
+      const fullNameMatch = team.fullName && team.fullName.toLowerCase().includes(term);
+      console.log(`팀 확인: ${team.name}, ID: ${team.id}, 매칭: ${teamNameMatch || fullNameMatch}`); // 디버깅용
+      
+      if (teamNameMatch || fullNameMatch) {
+        // 팀 ID 매핑 (실제 JSON 데이터 기준)
+        const teamIdMapping = {
+          'leopards': 1,  // 레오파즈 (서울)
+          'tigers': 2,    // 타이거스 (부산)
+          'eagles': 3,    // 이글스 (대구)
+          'bears': 4,     // 베어스 (인천)
+          'sharks': 5,    // 샤크스 (울산)
+          'dragons': 6,   // 드래곤스 (광주)
+          'lions': 7,     // 라이온스 (대전)
+          'falcons': 8    // 팔콘스 (제주)
+        };
+        
+        let numericId = teamIdMapping[team.id] || parseInt(team.id, 10);
+        if (isNaN(numericId)) {
+          // 팀 이름으로 ID 찾기 (실제 팀명 기준)
+          const nameMapping = {
+            '레오파즈': 1,    // 서울 레오파즈
+            '타이거스': 2,    // 부산 타이거스
+            '이글스': 3,      // 대구 이글스
+            '베어스': 4,      // 인천 베어스
+            '샤크스': 5,      // 울산 샤크스
+            '드래곤스': 6,    // 광주 드래곤스
+            '라이온스': 7,    // 대전 라이온스
+            '팔콘스': 8       // 제주 팔콘스
+          };
+          numericId = nameMapping[team.name] || 1;
+        }
+        
+        const suggestion = {
           type: 'team',
-          id: team.id,
+          id: numericId,
           name: team.name,
-          fullName: team.fullName,
-          displayText: `${team.name} (${team.fullName})`
-        });
+          fullName: team.fullName || team.name,
+          displayText: `${team.name}${team.fullName ? ` (${team.fullName})` : ''}`
+        };
+        console.log('생성된 제안:', suggestion); // 디버깅용
+        suggestions.push(suggestion);
       }
     });
 
     // 지역으로 검색
-    const regionTeams = AppState.teams.filter(team => 
-      team.region.toLowerCase().includes(term)
+    const regionTeams = teamsToSearch.filter(team => 
+      team.region && team.region.toLowerCase().includes(term)
     );
     
     regionTeams.forEach(team => {
-      if (!suggestions.find(s => s.id === team.id)) {
+      // 실제 JSON 데이터 기준 ID 매핑
+      const teamIdMapping = {
+        'leopards': 1, 'tigers': 2, 'eagles': 3, 'bears': 4,
+        'sharks': 5, 'dragons': 6, 'lions': 7, 'falcons': 8
+      };
+      const nameMapping = {
+        '레오파즈': 1, '타이거스': 2, '이글스': 3, '베어스': 4,
+        '샤크스': 5, '드래곤스': 6, '라이온스': 7, '팔콘스': 8
+      };
+      
+      let numericId = teamIdMapping[team.id] || nameMapping[team.name] || parseInt(team.id, 10) || 1;
+      
+      if (!suggestions.find(s => s.id === numericId)) {
         suggestions.push({
           type: 'region',
-          id: team.id,
+          id: numericId,
           name: team.name,
-          fullName: team.fullName,
+          fullName: team.fullName || team.name,
           displayText: `${team.name} - ${team.region}`
         });
       }
     });
 
     // 연령대로 검색
-    const ageTeams = AppState.teams.filter(team => 
-      team.ageGroup.toLowerCase().includes(term)
+    const ageTeams = teamsToSearch.filter(team => 
+      team.ageGroup && team.ageGroup.toLowerCase().includes(term)
     );
     
     ageTeams.forEach(team => {
-      if (!suggestions.find(s => s.id === team.id)) {
+      // 실제 JSON 데이터 기준 ID 매핑
+      const teamIdMapping = {
+        'leopards': 1, 'tigers': 2, 'eagles': 3, 'bears': 4,
+        'sharks': 5, 'dragons': 6, 'lions': 7, 'falcons': 8
+      };
+      const nameMapping = {
+        '레오파즈': 1, '타이거스': 2, '이글스': 3, '베어스': 4,
+        '샤크스': 5, '드래곤스': 6, '라이온스': 7, '팔콘스': 8
+      };
+      
+      let numericId = teamIdMapping[team.id] || nameMapping[team.name] || parseInt(team.id, 10) || 1;
+      
+      if (!suggestions.find(s => s.id === numericId)) {
         suggestions.push({
           type: 'age',
-          id: team.id,
+          id: numericId,
           name: team.name,
-          fullName: team.fullName,
+          fullName: team.fullName || team.name,
           displayText: `${team.name} - ${team.ageGroup}`
         });
       }
@@ -157,7 +320,10 @@ const SearchManager = {
 
   renderSuggestions(suggestions) {
     const suggestionsContainer = document.getElementById('search-suggestions');
-    if (!suggestionsContainer) return;
+    if (!suggestionsContainer) {
+      console.log('search-suggestions 컨테이너를 찾을 수 없음');
+      return;
+    }
 
     if (suggestions.length === 0) {
       suggestionsContainer.innerHTML = `
@@ -168,13 +334,36 @@ const SearchManager = {
       return;
     }
 
-    suggestionsContainer.innerHTML = suggestions
-      .map(suggestion => `
-        <div class="suggestion-item" data-team-id="${suggestion.id}">
-          ${suggestion.displayText}
-        </div>
-      `)
-      .join('');
+    console.log('렌더링할 제안들:', suggestions); // 디버깅용
+
+    // 각 제안에 대해 개별적으로 HTML 생성 및 검증
+    const htmlParts = suggestions.map(suggestion => {
+      console.log('제안 처리 중:', suggestion);
+      console.log('제안 ID:', suggestion.id, '타입:', typeof suggestion.id);
+      
+      // ID가 숫자인지 확인하고 강제 변환
+      const teamId = parseInt(suggestion.id, 10);
+      if (isNaN(teamId)) {
+        console.error('잘못된 팀 ID:', suggestion.id);
+        return '';
+      }
+      
+      const html = `<div class="suggestion-item" data-team-id="${teamId}">${suggestion.displayText}</div>`;
+      console.log('생성된 HTML:', html);
+      return html;
+    }).filter(html => html); // 빈 문자열 제거
+
+    suggestionsContainer.innerHTML = htmlParts.join('');
+      
+    console.log('최종 렌더링된 HTML:', suggestionsContainer.innerHTML); // 디버깅용
+    
+    // 렌더링 후 실제 DOM 요소들 확인
+    const renderedItems = suggestionsContainer.querySelectorAll('.suggestion-item');
+    console.log('렌더링된 DOM 요소들:', renderedItems);
+    renderedItems.forEach((item, index) => {
+      console.log(`아이템 ${index}:`, item.outerHTML);
+      console.log(`데이터 속성:`, item.dataset);
+    });
   },
 
   showSuggestions() {
@@ -199,7 +388,7 @@ const SearchManager = {
 
     if (team) {
       // 팀 페이지로 이동
-      window.location.href = `team.html?name=${encodeURIComponent(team.name)}`;
+      window.location.href = `team.html?id=${team.id}`;
     }
 
     // 검색 제안 숨기기
@@ -212,6 +401,42 @@ const SearchManager = {
     }
   },
 
+  selectTeamById(teamId) {
+    console.log('selectTeamById 호출됨, 팀 ID:', teamId); // 디버깅용
+    console.log('팀 ID 타입:', typeof teamId); // 디버깅용
+    
+    // 팀 ID를 숫자로 확실히 변환
+    const numericTeamId = parseInt(teamId, 10);
+    console.log('변환된 숫자 ID:', numericTeamId); // 디버깅용
+    
+    if (isNaN(numericTeamId) || numericTeamId < 1 || numericTeamId > 6) {
+      console.error('잘못된 팀 ID:', teamId);
+      return;
+    }
+    
+    // 팀 ID로 팀 상세 페이지로 이동
+    const url = `team.html?id=${numericTeamId}`;
+    console.log('이동할 URL:', url); // 디버깅용
+    console.log('현재 URL:', window.location.href); // 디버깅용
+    
+    // 강제로 페이지 리로드하면서 이동
+    window.location.assign(url);
+
+    // 검색 제안 숨기기
+    this.hideSuggestions();
+    this.hideHeroSuggestions();
+    
+    // 검색 입력 필드 초기화
+    const globalSearch = document.getElementById('global-search');
+    const heroSearch = document.getElementById('hero-search');
+    if (globalSearch) {
+      globalSearch.value = '';
+    }
+    if (heroSearch) {
+      heroSearch.value = '';
+    }
+  },
+
   performSearch(query) {
     if (!query.trim()) return;
 
@@ -219,7 +444,7 @@ const SearchManager = {
     
     if (suggestions.length > 0) {
       // 첫 번째 제안 선택
-      this.selectTeam(suggestions[0].name);
+      this.selectTeamById(suggestions[0].id);
     } else {
       // 검색 결과가 없을 때 처리
       this.showNoResults(query);
@@ -254,7 +479,7 @@ const SearchManager = {
     
     if (suggestions.length > 0) {
       // 첫 번째 제안 선택
-      this.selectTeam(suggestions[0].name);
+      this.selectTeamById(suggestions[0].id);
     } else {
       // 검색 결과가 없을 때 처리
       this.showHeroNoResults(query);
@@ -387,4 +612,6 @@ const SearchManager = {
 };
 
 // 전역으로 노출
+window.SearchManager = SearchManager;
+
 window.SearchManager = SearchManager;

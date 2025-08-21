@@ -8,22 +8,57 @@ const H2HManager = {
     this.bindEvents();
   },
 
-  setTeams(team, opponent) {
+  async setTeams(team, opponent) {
     this.currentTeam = team;
     this.currentOpponent = opponent;
-    this.h2hData = this.getH2HData();
     
-    if (this.h2hData) {
-      this.renderH2H();
-    } else {
-      this.showNoH2HData();
+    // 로딩 표시
+    this.showLoading();
+    
+    try {
+      this.h2hData = await this.getH2HData();
+      
+      if (this.h2hData) {
+        this.renderH2H();
+      } else {
+        this.showNoH2HData();
+      }
+    } catch (error) {
+      console.error('H2H 데이터 로드 실패:', error);
+      this.showError('상대전적 데이터를 불러오는데 실패했습니다.');
     }
   },
 
-  getH2HData() {
+  async getH2HData() {
     if (!this.currentTeam || !this.currentOpponent) return null;
 
-    const rivalData = AppState.rivals.find(rival => rival.teamId === this.currentTeam.id);
+    try {
+      // API에서 H2H 데이터 가져오기
+      const response = await API.fetch(`${API.endpoints.h2h}/${this.currentTeam.id}/${this.currentOpponent.id}`);
+      
+      if (response.success && response.data) {
+        const h2hData = response.data;
+        
+        // 프론트엔드 형식으로 변환
+        return {
+          opponentId: this.currentOpponent.id,
+          totalMatches: h2hData.totalMatches,
+          wins: h2hData.team1.id === this.currentTeam.id ? h2hData.team1.wins : h2hData.team2.wins,
+          losses: h2hData.team1.id === this.currentTeam.id ? h2hData.team2.wins : h2hData.team1.wins,
+          draws: h2hData.draws,
+          goalsFor: h2hData.team1.id === this.currentTeam.id ? h2hData.team1.goals : h2hData.team2.goals,
+          goalsAgainst: h2hData.team1.id === this.currentTeam.id ? h2hData.team2.goals : h2hData.team1.goals,
+          recentMatches: h2hData.recentMatches || [],
+          matchHistory: h2hData.matchHistory || [],
+          lastMatchDate: h2hData.lastMatchDate
+        };
+      }
+    } catch (error) {
+      console.warn('H2H API 로드 실패, 더미 데이터 사용:', error.message);
+    }
+
+    // API 실패 시 기존 rivals 데이터 사용
+    const rivalData = AppState.rivals?.find(rival => rival.teamId === this.currentTeam.id);
     if (!rivalData) return null;
 
     return rivalData.opponents.find(opponent => opponent.opponentId === this.currentOpponent.id);
@@ -576,6 +611,38 @@ const H2HManager = {
     }
     
     return factors.length > 0 ? factors : ['특별한 우위 요인 없음'];
+  },
+
+  showLoading() {
+    const container = document.querySelector('.h2h-analysis-section');
+    if (container) {
+      container.innerHTML = `
+        <div class="loading-container" style="text-align: center; padding: 3rem;">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">⏳</div>
+          <p style="color: #ffffff;">상대전적 데이터를 불러오는 중...</p>
+        </div>
+      `;
+    }
+  },
+
+  showError(message) {
+    const container = document.querySelector('.h2h-analysis-section');
+    if (container) {
+      container.innerHTML = `
+        <div class="error-container" style="text-align: center; padding: 3rem;">
+          <div style="font-size: 2rem; margin-bottom: 1rem; color: #ff4757;">❌</div>
+          <p style="color: #ffffff; margin-bottom: 1rem;">${message}</p>
+          <button onclick="location.reload()" style="
+            background: #d4af37; 
+            color: #000; 
+            border: none; 
+            padding: 0.5rem 1rem; 
+            border-radius: 0.5rem; 
+            cursor: pointer;
+          ">다시 시도</button>
+        </div>
+      `;
+    }
   },
 
   bindEvents() {

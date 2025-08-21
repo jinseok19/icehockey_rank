@@ -9,78 +9,108 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <nav class="page-navigation">
-        <div class="nav-container">
-            <div class="breadcrumb">
-                <a href="/">홈</a>
-                <span class="separator">/</span>
-                <span id="team-breadcrumb">팀</span>
+<body style="background: #000000; color: #ffffff; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;">
+    <main class="main" style="min-height: 100vh; background: #000000; color: #ffffff; position: relative;">
+        <!-- 브레드크럼 네비게이션 -->
+        <section style="padding: 2rem 2rem 1rem; background: #0a0a0a; border-bottom: 1px solid #2a2a2a;">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <nav style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: #888888;">
+                    <a href="index.html" style="color: #cccccc; text-decoration: none; transition: color 0.3s ease;">홈</a>
+                    <span>/</span>
+                    <a href="teams.html" style="color: #cccccc; text-decoration: none; transition: color 0.3s ease;">팀 목록</a>
+                    <span>/</span>
+                    <span id="team-breadcrumb-name" style="color: #ffffff;">팀 상세</span>
+                </nav>
             </div>
-            
-            <div class="nav-tabs">
-                <button class="tab-btn active" data-tab="overview">팀 개요</button>
-                <button class="tab-btn" data-tab="recent">최근 경기</button>
-                <button class="tab-btn" data-tab="h2h">상대전적</button>
-            </div>
-        </div>
-    </nav>
+        </section>
 
-    <main class="main team-main">
-        <div class="team-layout">
-            <!-- 팀 프로필 패널 -->
-            <div class="team-panel">
-                <div class="team-profile">
-                    <!-- 팀 프로필이 여기에 렌더링됩니다 -->
-                </div>
+        <!-- 팀 헤더 섹션 -->
+        <section id="team-header" style="padding: 3rem 2rem; background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border-bottom: 1px solid #2a2a2a;">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <!-- 팀 헤더 내용이 여기에 렌더링됩니다 -->
             </div>
+        </section>
 
-            <!-- 메인 콘텐츠 영역 -->
-            <div class="content-area">
+        <!-- 탭 네비게이션 -->
+        <section style="padding: 0 2rem; background: #0a0a0a; border-bottom: 1px solid #2a2a2a; position: sticky; top: 80px; z-index: 10;">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <nav style="display: flex; gap: 0;">
+                    <button id="tab-overview" class="tab-btn active" data-tab="overview" style="padding: 1rem 2rem; background: transparent; color: #ffffff; border: none; border-bottom: 3px solid #ffffff; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                        팀 개요
+                    </button>
+                    <button id="tab-stats" class="tab-btn" data-tab="stats" style="padding: 1rem 2rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                        상세 통계
+                    </button>
+                    <button id="tab-matches" class="tab-btn" data-tab="matches" style="padding: 1rem 2rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                        최근 경기
+                    </button>
+                    <button id="tab-h2h" class="tab-btn" data-tab="h2h" style="padding: 1rem 2rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                        상대전적
+                    </button>
+                </nav>
+            </div>
+        </section>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <section style="padding: 3rem 2rem; background: #000000;">
+            <div style="max-width: 1200px; margin: 0 auto;">
                 <!-- 팀 개요 탭 -->
-                <div id="overview-panel" class="tab-panel active">
-                    <div class="overview-stats">
-                        <h3>시즌 통계</h3>
-                        <div class="stats-grid">
-                            <!-- 팀 통계가 여기에 렌더링됩니다 -->
-                        </div>
-                    </div>
+                <div id="overview-content" class="tab-content active" style="display: block;">
+                    <!-- 개요 내용이 여기에 렌더링됩니다 -->
+                </div>
 
-                    <div class="recent-form">
-                        <!-- 최근 경기 폼이 여기에 렌더링됩니다 -->
-                    </div>
-
-                    <div class="team-achievements">
-                        <h3>주요 성과</h3>
-                        <ul>
-                            <!-- 팀 성과가 여기에 렌더링됩니다 -->
-                        </ul>
-                    </div>
+                <!-- 상세 통계 탭 -->
+                <div id="stats-content" class="tab-content" style="display: none;">
+                    <!-- 통계 내용이 여기에 렌더링됩니다 -->
                 </div>
 
                 <!-- 최근 경기 탭 -->
-                <div id="recent-panel" class="tab-panel">
-                    <h3>최근 경기</h3>
-                    <div class="matches-list">
-                        <!-- 최근 경기 목록이 여기에 렌더링됩니다 -->
-                    </div>
+                <div id="matches-content" class="tab-content" style="display: none;">
+                    <!-- 경기 내용이 여기에 렌더링됩니다 -->
                 </div>
 
                 <!-- 상대전적 탭 -->
-                <div id="h2h-panel" class="tab-panel">
-                    <h3>상대전적</h3>
-                    <div class="h2h-content">
-                        <!-- 상대전적이 여기에 렌더링됩니다 -->
-                    </div>
+                <div id="h2h-content" class="tab-content" style="display: none;">
+                    <!-- H2H 내용이 여기에 렌더링됩니다 -->
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="js/common.js"></script>
     <script src="js/app.js"></script>
     <script src="js/search.js"></script>
-    <script src="js/team.js"></script>
+    <script src="js/team-detail.js"></script>
+    
+    <style>
+        .tab-btn:hover {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+        }
+        
+        .tab-btn.active {
+            color: #ffffff !important;
+            border-bottom-color: #ffffff !important;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .stat-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+    </style>
 </body>
 </html>
