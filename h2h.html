@@ -127,6 +127,80 @@
                     <h2>상세 분석</h2>
                     <p>경기별 상세 기록과 팀 성능 비교</p>
                 </div>
+                
+                <!-- 팀별 상대전적 요약 -->
+                <div class="team-h2h-summary">
+                    <div class="team-h2h-card" id="team1-h2h-summary">
+                        <div class="team-h2h-left">
+                            <div class="team-h2h-header">
+                                <div class="team-h2h-logo" id="team1-logo">?</div>
+                                <div class="team-h2h-info">
+                                    <h3 id="team1-name">팀1</h3>
+                                    <div class="team-h2h-tags">
+                                        <span id="team1-region">지역</span>
+                                        <span id="team1-age">연령대</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-h2h-stats">
+                            <div class="stat-row">
+                                <div class="stat-label">승률</div>
+                                <div class="stat-value winrate-value" id="team1-winrate">0%</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-label">전적</div>
+                                <div class="stat-value record-value" id="team1-record">0승 0패 0무</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-label">총 경기</div>
+                                <div class="stat-value total-value" id="team1-total">0경기</div>
+                            </div>
+                        </div>
+                        <div class="team-h2h-actions">
+                            <button class="detail-btn" onclick="showTeamDetail(1)">
+                                <span>상세 분석 보기</span>
+                                <i data-lucide="arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="team-h2h-card" id="team2-h2h-summary">
+                        <div class="team-h2h-left">
+                            <div class="team-h2h-header">
+                                <div class="team-h2h-logo" id="team2-logo">?</div>
+                                <div class="team-h2h-info">
+                                    <h3 id="team2-name">팀2</h3>
+                                    <div class="team-h2h-tags">
+                                        <span id="team2-region">지역</span>
+                                        <span id="team2-age">연령대</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-h2h-stats">
+                            <div class="stat-row">
+                                <div class="stat-label">승률</div>
+                                <div class="stat-value winrate-value" id="team2-winrate">0%</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-label">전적</div>
+                                <div class="stat-value record-value" id="team2-record">0승 0패 0무</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-label">총 경기</div>
+                                <div class="stat-value total-value" id="team2-total">0경기</div>
+                            </div>
+                        </div>
+                        <div class="team-h2h-actions">
+                            <button class="detail-btn" onclick="showTeamDetail(2)">
+                                <span>상세 분석 보기</span>
+                                <i data-lucide="arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="analysis-grid">
                     <!-- 경기별 상세 기록 -->
                     <div class="analysis-card">
@@ -161,8 +235,8 @@
                                         <div class="bar team2-bar" style="width: 0%" id="team2-winrate-bar"></div>
                                     </div>
                                     <div class="metric-values">
-                                        <span id="team1-winrate">0%</span>
-                                        <span id="team2-winrate">0%</span>
+                                        <span id="team1-winrate-compare">0%</span>
+                                        <span id="team2-winrate-compare">0%</span>
                                     </div>
                                 </div>
                                 
@@ -596,6 +670,218 @@
             background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
         }
 
+        /* 팀별 상대전적 요약 */
+        .team-h2h-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .team-h2h-card {
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            min-height: 400px;
+            gap: 3rem;
+        }
+
+        .team-h2h-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .team-h2h-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .team-h2h-card:hover::before {
+            opacity: 1;
+        }
+
+        .team-h2h-left {
+            display: flex;
+            flex-direction: column;
+            width: 35%;
+            flex-shrink: 0;
+        }
+
+        .team-h2h-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .team-h2h-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #000;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            flex-shrink: 0;
+        }
+
+        .team-h2h-info {
+            flex: 1;
+        }
+
+        .team-h2h-info h3 {
+            margin: 0 0 1rem 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .team-h2h-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .team-h2h-tags span {
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            white-space: nowrap;
+        }
+
+        .team-h2h-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 3rem 4rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex: 1;
+            width: 65%;
+            justify-content: center;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2.5rem 3rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            min-height: 100px;
+            flex: 1;
+        }
+
+        .stat-row:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateX(6px);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .stat-row .stat-label {
+            color: #cccccc;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            width: 150px;
+            flex-shrink: 0;
+        }
+
+        .stat-row .stat-value {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: right;
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-left: 3rem;
+        }
+
+        .stat-row .winrate-value {
+            color: #10b981;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .stat-row .record-value {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-row .total-value {
+            color: #60a5fa;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .team-h2h-actions {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-btn {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #000;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            width: 100%;
+            justify-content: center;
+        }
+
+        .detail-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .detail-btn i {
+            width: 18px;
+            height: 18px;
+        }
+
         .analysis-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -852,6 +1138,84 @@
             .h2h-stats-section, .h2h-analysis-section, .h2h-prediction-section {
                 padding: 3rem 0;
             }
+
+            /* 팀 상대전적 카드 반응형 */
+            .team-h2h-summary {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .team-h2h-card {
+                padding: 1.5rem;
+            }
+
+            .team-h2h-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                margin-bottom: 2rem;
+                padding-bottom: 1rem;
+            }
+
+            .team-h2h-logo {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
+            }
+
+            .team-h2h-info h3 {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+
+            .team-h2h-tags {
+                justify-content: center;
+            }
+
+            .team-h2h-stats {
+                padding: 1rem;
+                margin-bottom: 2rem;
+                gap: 1rem;
+            }
+
+            .stat-row {
+                padding: 1.25rem 1.5rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+
+            .stat-row .stat-label {
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .stat-row .stat-value {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .stat-row .winrate-value {
+                font-size: 1.2rem;
+            }
+
+            .stat-row .record-value {
+                font-size: 1.1rem;
+            }
+
+            .stat-row .total-value {
+                font-size: 1rem;
+            }
+
+            .team-h2h-actions {
+                padding-top: 1rem;
+            }
+
+            .detail-btn {
+                padding: 1rem 2rem;
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -966,6 +1330,24 @@
             // 짧은 이름 설정
             document.getElementById('team1-name-short').textContent = team1.name;
             document.getElementById('team2-name-short').textContent = team2.name;
+
+            // 새로운 팀 상대전적 카드 업데이트
+            updateTeamH2HCards(team1, team2);
+        }
+
+        // 팀 상대전적 카드 업데이트
+        function updateTeamH2HCards(team1, team2) {
+            // 팀 1 카드
+            document.getElementById('team1-logo').textContent = team1.logo;
+            document.getElementById('team1-name').textContent = team1.name;
+            document.getElementById('team1-region').textContent = team1.region;
+            document.getElementById('team1-age').textContent = team1.ageGroup;
+
+            // 팀 2 카드
+            document.getElementById('team2-logo').textContent = team2.logo;
+            document.getElementById('team2-name').textContent = team2.name;
+            document.getElementById('team2-region').textContent = team2.region;
+            document.getElementById('team2-age').textContent = team2.ageGroup;
         }
 
         // H2H 데이터 로딩 및 표시
@@ -977,6 +1359,7 @@
             displayMatchHistory(h2hData.matches);
             displayTeamComparison(team1, team2);
             displayPrediction(team1, team2, h2hData);
+            updateH2HStats(team1, team2, h2hData);
         }
 
         // 더미 H2H 데이터 생성
@@ -1112,6 +1495,19 @@
             container.innerHTML = `<p>${prediction}</p>`;
         }
 
+        // H2H 통계 업데이트
+        function updateH2HStats(team1, team2, h2hData) {
+            // 팀 1 H2H 통계
+            document.getElementById('team1-winrate').textContent = `${Math.round((h2hData.team1Wins / (h2hData.team1Wins + h2hData.team2Wins + h2hData.draws)) * 100)}%`;
+            document.getElementById('team1-record').textContent = `${h2hData.team1Wins}승 ${h2hData.team2Wins}패 ${h2hData.draws}무`;
+            document.getElementById('team1-total').textContent = `${h2hData.team1Wins + h2hData.team2Wins + h2hData.draws}경기`;
+
+            // 팀 2 H2H 통계
+            document.getElementById('team2-winrate').textContent = `${Math.round((h2hData.team2Wins / (h2hData.team1Wins + h2hData.team2Wins + h2hData.draws)) * 100)}%`;
+            document.getElementById('team2-record').textContent = `${h2hData.team2Wins}승 ${h2hData.team1Wins}패 ${h2hData.draws}무`;
+            document.getElementById('team2-total').textContent = `${h2hData.team1Wins + h2hData.team2Wins + h2hData.draws}경기`;
+        }
+
         // 팀 선택기 표시
         function showTeamSelector() {
             const { team1Id } = getTeamIdsFromUrl();
@@ -1227,6 +1623,17 @@
                 </div>
             `;
             lucide.createIcons();
+        }
+
+        // 팀 상세 분석 보기
+        function showTeamDetail(teamNumber) {
+            const teamId = teamNumber === 1 ? 
+                new URLSearchParams(window.location.search).get('team1') : 
+                new URLSearchParams(window.location.search).get('team2');
+            
+            if (teamId) {
+                window.location.href = `team.html?id=${teamId}`;
+            }
         }
 
         // 페이지 로드 시 초기화

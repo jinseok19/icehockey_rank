@@ -25,26 +25,27 @@
         </section>
 
         <!-- 팀 헤더 섹션 -->
-        <section id="team-header" style="padding: 3rem 2rem; background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border-bottom: 1px solid #2a2a2a;">
-            <div style="max-width: 1200px; margin: 0 auto;">
+        <section id="team-header" style="padding: 5rem 2rem 2rem; background: transparent; border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: relative; overflow: hidden; min-height: 400px;">
+            <div style="max-width: 1400px; margin: 0 auto; position: relative; z-index: 1;">
                 <!-- 팀 헤더 내용이 여기에 렌더링됩니다 -->
             </div>
         </section>
 
         <!-- 탭 네비게이션 -->
-        <section style="padding: 0 2rem; background: #0a0a0a; border-bottom: 1px solid #2a2a2a; position: sticky; top: 80px; z-index: 10;">
+        <section style="padding: 0 2rem; background: linear-gradient(135deg, #0f0f1a 0%, #0a0a0a 100%); border-bottom: 1px solid rgba(212, 175, 55, 0.1); position: sticky; top: 80px; z-index: 10; backdrop-filter: blur(10px);">
             <div style="max-width: 1200px; margin: 0 auto;">
                 <nav style="display: flex; gap: 0;">
-                    <button id="tab-overview" class="tab-btn active" data-tab="overview" style="padding: 1rem 2rem; background: transparent; color: #ffffff; border: none; border-bottom: 3px solid #ffffff; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+
+                    <button id="tab-overview" class="tab-btn active" data-tab="overview" style="padding: 1.25rem 2.5rem; background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%); color: #ffffff; border: none; border-bottom: 3px solid #d4af37; font-weight: 700; cursor: pointer; transition: all 0.3s ease; position: relative;">
                         팀 개요
                     </button>
-                    <button id="tab-stats" class="tab-btn" data-tab="stats" style="padding: 1rem 2rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                    <button id="tab-stats" class="tab-btn" data-tab="stats" style="padding: 1.25rem 2.5rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease; position: relative;">
                         상세 통계
                     </button>
-                    <button id="tab-matches" class="tab-btn" data-tab="matches" style="padding: 1rem 2rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                    <button id="tab-matches" class="tab-btn" data-tab="matches" style="padding: 1.25rem 2.5rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease; position: relative;">
                         최근 경기
                     </button>
-                    <button id="tab-h2h" class="tab-btn" data-tab="h2h" style="padding: 1rem 2rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                    <button id="tab-h2h" class="tab-btn" data-tab="h2h" style="padding: 1.25rem 2.5rem; background: transparent; color: #888888; border: none; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; transition: all 0.3s ease; position: relative;">
                         상대전적
                     </button>
                 </nav>
@@ -52,7 +53,7 @@
         </section>
 
         <!-- 메인 콘텐츠 영역 -->
-        <section style="padding: 3rem 2rem; background: #000000;">
+        <section style="padding: 3rem 2rem; background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%); min-height: 100vh;">
             <div style="max-width: 1200px; margin: 0 auto;">
                 <!-- 팀 개요 탭 -->
                 <div id="overview-content" class="tab-content active" style="display: block;">
@@ -85,13 +86,14 @@
     
     <style>
         .tab-btn:hover {
-            color: #ffffff !important;
-            background: rgba(255, 255, 255, 0.05) !important;
+            color: #d4af37 !important;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%) !important;
         }
         
         .tab-btn.active {
             color: #ffffff !important;
-            border-bottom-color: #ffffff !important;
+            border-bottom-color: #d4af37 !important;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%) !important;
         }
         
         @keyframes fadeIn {

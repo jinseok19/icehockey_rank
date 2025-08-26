@@ -14,6 +14,7 @@ const teamsData = [
         recentMatches: ['W', 'L', 'W', 'D', 'W'],
         founded: 2010,
         logo: "레",
+        logoImage: "assets/emblems/leopards.png",
         description: "서울을 기반으로 한 강력한 U16 아이스하키 팀으로, 뛰어난 팀워크와 공격적인 플레이 스타일로 유명합니다.",
         coach: "김철수",
         captain: "박민준",
@@ -40,6 +41,7 @@ const teamsData = [
         recentMatches: ['W', 'D', 'W', 'W', 'L'],
         founded: 2016,
         logo: "타",
+        logoImage: "assets/emblems/tigers.png",
         description: "부산의 차세대 아이스하키 스타들이 모인 U18 팀으로, 빠른 스케이팅과 정확한 패싱이 강점입니다.",
         coach: "이영수",
         captain: "최준호",
@@ -198,6 +200,47 @@ function initializePage() {
     
     // 탭 이벤트 리스너 등록
     setupTabNavigation();
+    
+    // 스타일 강제 적용
+    forceStyleApplication();
+}
+
+// 스타일 강제 적용 함수
+function forceStyleApplication() {
+    setTimeout(() => {
+        // 팀 헤더 섹션 스타일 강제 적용
+        const headerSection = document.getElementById('team-header');
+        if (headerSection) {
+            headerSection.style.background = 'transparent';
+            headerSection.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            headerSection.style.padding = '5rem 2rem 2rem';
+            headerSection.style.minHeight = '400px';
+        }
+        
+        // 모든 탭 초기화 및 활성 탭 설정
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(btn => {
+            btn.style.color = '#888888';
+            btn.style.borderBottomColor = 'transparent';
+            btn.style.fontWeight = '600';
+            btn.style.background = 'transparent';
+        });
+        
+        // 팀 개요 탭 활성화
+        const overviewTab = document.getElementById('tab-overview');
+        if (overviewTab) {
+            overviewTab.style.color = '#ffffff';
+            overviewTab.style.borderBottomColor = '#d4af37';
+            overviewTab.style.fontWeight = '700';
+            overviewTab.style.background = 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%)';
+        }
+        
+        // 컨테이너 최대 너비 확장
+        const headerContainer = headerSection.querySelector('div');
+        if (headerContainer) {
+            headerContainer.style.maxWidth = '1400px';
+        }
+    }, 100);
 }
 
 // 팀 헤더 렌더링
@@ -206,54 +249,61 @@ function renderTeamHeader() {
     
     const recentMatchesHtml = currentTeam.recentMatches.map(result => {
         const bgColor = result === 'W' ? '#10b981' : result === 'L' ? '#ef4444' : '#f59e0b';
-        return `<div style="width: 32px; height: 32px; background: ${bgColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #ffffff; font-weight: 700; box-shadow: 0 2px 8px rgba(${result === 'W' ? '16, 185, 129' : result === 'L' ? '239, 68, 68' : '245, 158, 11'}, 0.3);">${result}</div>`;
+        const shadowColor = result === 'W' ? '16, 185, 129' : result === 'L' ? '239, 68, 68' : '245, 158, 11';
+        return `<div style="width: 40px; height: 40px; background: linear-gradient(135deg, ${bgColor} 0%, ${result === 'W' ? '#059669' : result === 'L' ? '#dc2626' : '#d97706'} 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #ffffff; font-weight: 800; box-shadow: 0 4px 16px rgba(${shadowColor}, 0.4); border: 2px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease;" onmouseenter="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 24px rgba(${shadowColor}, 0.6)'" onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(${shadowColor}, 0.4)'">${result}</div>`;
     }).join('');
     
     headerElement.innerHTML = `
-        <div style="display: flex; gap: 3rem; align-items: flex-start; flex-wrap: wrap;">
+        <div style="display: grid; grid-template-columns: auto 1fr; gap: 5rem; align-items: start; margin-bottom: 3rem;">
             <!-- 팀 로고 및 기본 정보 -->
-            <div style="display: flex; gap: 2rem; align-items: center; flex-shrink: 0;">
-                <div style="width: 120px; height: 120px; background: ${teamColor.bg}; border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.4);">
-                    <span style="font-size: 3rem; font-weight: 800; color: ${teamColor.text}; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${currentTeam.logo}</span>
+            <div style="display: flex; gap: 3rem; align-items: center;">
+                <div style="width: 420px; height: 420px; background: ${currentTeam.logoImage ? 'transparent' : teamColor.bg}; border-radius: 64px; display: flex; align-items: center; justify-content: center; box-shadow: ${currentTeam.logoImage ? 'none' : '0 24px 60px rgba(212, 175, 55, 0.4)'}; border: ${currentTeam.logoImage ? 'none' : '2px solid rgba(212, 175, 55, 0.3)'}; overflow: hidden;">
+                    ${currentTeam.logoImage ? 
+                        `<img src="${currentTeam.logoImage}" alt="${currentTeam.name} 로고" style="width: 100%; height: 100%; object-fit: contain; border-radius: 64px;">` :
+                        `<span style="font-size: 4rem; font-weight: 800; color: ${teamColor.text}; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${currentTeam.logo}</span>`
+                    }
                 </div>
                 
-                <div>
-                    <h1 style="font-size: 2.5rem; font-weight: 700; color: #ffffff; margin: 0; margin-bottom: 1rem;">${currentTeam.name}</h1>
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                        <span style="background: rgba(255, 255, 255, 0.1); color: #e5e5e5; padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.9rem; font-weight: 600; border: 1px solid #404040;">${currentTeam.region}</span>
-                        <span style="background: rgba(255, 255, 255, 0.05); color: #cccccc; padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.9rem; font-weight: 600; border: 1px solid #2a2a2a;">${currentTeam.ageGroup}</span>
-                        <span style="background: rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.15); color: ${teamColor.stats}; padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.9rem; font-weight: 600; border: 1px solid ${teamColor.stats};">창단 ${currentTeam.founded}년</span>
+                <div style="min-width: 400px;">
+                    <h1 style="font-size: 3.2rem; font-weight: 800; color: #ffffff; margin: 0; margin-bottom: 1.5rem; text-shadow: 0 2px 20px rgba(0,0,0,0.3); line-height: 1.1;">${currentTeam.name}</h1>
+                    <div style="display: flex; gap: 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                        <span style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%); color: #d4af37; padding: 0.75rem 1.5rem; border-radius: 25px; font-size: 0.9rem; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.3);">${currentTeam.region}</span>
+                        <span style="background: rgba(255, 255, 255, 0.08); color: #b8b8b8; padding: 0.75rem 1.5rem; border-radius: 25px; font-size: 0.9rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1);">${currentTeam.ageGroup}</span>
+                        <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2) 0%, rgba(96, 165, 250, 0.1) 100%); color: #60a5fa; padding: 0.75rem 1.5rem; border-radius: 25px; font-size: 0.9rem; font-weight: 700; border: 1px solid #60a5fa;">창단 ${currentTeam.founded}년</span>
                     </div>
-                    <p style="color: #cccccc; max-width: 600px; line-height: 1.6; margin: 0; font-size: 1rem;">${currentTeam.description}</p>
+                    <p style="color: #cccccc; max-width: 700px; line-height: 1.8; margin: 0; font-size: 1.1rem; font-weight: 400;">${currentTeam.description}</p>
                 </div>
             </div>
             
             <!-- 주요 통계 -->
-            <div style="flex: 1; min-width: 300px;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-                    <div style="text-align: center; padding: 1.5rem 1rem; background: rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.1); border-radius: 16px; border: 1px solid rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.3);">
-                        <div style="font-size: 2rem; font-weight: 800; color: ${teamColor.stats}; margin-bottom: 0.5rem;">${currentTeam.winRate}%</div>
-                        <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500;">승률</div>
+            <div style="width: 100%; max-width: 600px; justify-self: end;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
+                    <div style="text-align: center; padding: 2.5rem 1.5rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%); border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+                        <div style="font-size: 2.8rem; font-weight: 800; color: #ffffff; margin-bottom: 0.75rem; line-height: 1;">${currentTeam.winRate}%</div>
+                        <div style="font-size: 0.9rem; color: #cccccc; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">승률</div>
                     </div>
-                    <div style="text-align: center; padding: 1.5rem 1rem; background: rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.08); border-radius: 16px; border: 1px solid rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.25);">
-                        <div style="font-size: 2rem; font-weight: 800; color: ${teamColor.stats}; margin-bottom: 0.5rem;">${currentTeam.totalMatches}</div>
-                        <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500;">총 경기</div>
+                    <div style="text-align: center; padding: 2.5rem 1.5rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%); border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+                        <div style="font-size: 2.8rem; font-weight: 800; color: #ffffff; margin-bottom: 0.75rem; line-height: 1;">${currentTeam.totalMatches}</div>
+                        <div style="font-size: 0.9rem; color: #cccccc; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">총 경기</div>
                     </div>
-                    <div style="text-align: center; padding: 1.5rem 1rem; background: rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.06); border-radius: 16px; border: 1px solid rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.2);">
-                        <div style="font-size: 2rem; font-weight: 800; color: ${teamColor.stats}; margin-bottom: 0.5rem;">${currentTeam.avgScore}</div>
-                        <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500;">평균득점</div>
+                    <div style="text-align: center; padding: 2.5rem 1.5rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%); border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+                        <div style="font-size: 2.8rem; font-weight: 800; color: #ffffff; margin-bottom: 0.75rem; line-height: 1;">${currentTeam.avgScore}</div>
+                        <div style="font-size: 0.9rem; color: #cccccc; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">평균득점</div>
                     </div>
                 </div>
                 
                 <!-- 최근 경기 폼 -->
-                <div>
-                    <h4 style="font-size: 0.9rem; color: #888888; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">최근 경기</h4>
-                    <div style="display: flex; gap: 0.75rem; justify-content: flex-start; align-items: center;">
+                <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%); padding: 2.5rem; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <h4 style="font-size: 1rem; color: #d4af37; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;">최근 경기</h4>
+                    <div style="display: flex; gap: 1.25rem; justify-content: flex-start; align-items: center; flex-wrap: wrap;">
                         ${recentMatchesHtml}
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- 추가 공간 확보 -->
+        <div style="height: 0.5rem;"></div>
     `;
 }
 
@@ -271,12 +321,16 @@ function setupTabNavigation() {
                 btn.classList.remove('active');
                 btn.style.color = '#888888';
                 btn.style.borderBottomColor = 'transparent';
+                btn.style.fontWeight = '600';
+                btn.style.background = 'transparent';
             });
             
             // 클릭된 탭 버튼 활성화
             button.classList.add('active');
             button.style.color = '#ffffff';
-            button.style.borderBottomColor = '#ffffff';
+            button.style.borderBottomColor = '#d4af37';
+            button.style.fontWeight = '700';
+            button.style.background = 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%)';
             
             // 모든 탭 콘텐츠 숨기기
             tabContents.forEach(content => {
@@ -545,36 +599,64 @@ function renderH2HContent() {
                     return `
                         <div class="stat-card h2h-card" 
                              data-opponent-id="${data.opponent.id}" 
-                             style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; border-radius: 16px; padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; position: relative;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
-                                <div style="display: flex; align-items: center; gap: 1.5rem;">
-                                    <div style="width: 60px; height: 60px; background: ${opponentColor.bg}; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: ${opponentColor.text}; font-weight: 800; font-size: 1.5rem;">
-                                        ${data.opponent.logo}
+                             style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;"
+                             onmouseenter="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(212, 175, 55, 0.6)'; this.style.boxShadow='0 12px 40px rgba(212, 175, 55, 0.15)'"
+                             onmouseleave="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'; this.style.boxShadow='none'">
+                            
+                            <div style="display: flex; align-items: center; gap: 2rem; position: relative; z-index: 1;">
+                                <!-- 왼쪽: 팀 정보 -->
+                                <div style="display: flex; align-items: center; gap: 1.5rem; width: 25%; flex-shrink: 0;">
+                                    <div style="width: 90px; height: 90px; background: ${data.opponent.logoImage ? 'transparent' : opponentColor.bg}; border-radius: 22px; display: flex; align-items: center; justify-content: center; color: ${opponentColor.text}; font-weight: 800; font-size: 1.8rem; box-shadow: ${data.opponent.logoImage ? 'none' : '0 8px 24px rgba(0,0,0,0.3)'}; overflow: hidden;">
+                                        ${data.opponent.logoImage ? 
+                                            `<img src="${data.opponent.logoImage}" alt="${data.opponent.name} 로고" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">` :
+                                            `${data.opponent.logo}`
+                                        }
                                     </div>
                                     <div>
-                                        <div style="color: #ffffff; font-weight: 600; font-size: 1.2rem; margin-bottom: 0.5rem;">${data.opponent.name}</div>
-                                        <div style="display: flex; gap: 1rem;">
-                                            <span style="background: rgba(255, 255, 255, 0.1); color: #e5e5e5; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">${data.opponent.region}</span>
-                                            <span style="background: rgba(255, 255, 255, 0.05); color: #cccccc; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">${data.opponent.ageGroup}</span>
+                                        <div style="color: #ffffff; font-weight: 700; font-size: 1.3rem; margin-bottom: 0.75rem; line-height: 1.2;">${data.opponent.name}</div>
+                                        <div style="display: flex; gap: 0.75rem;">
+                                            <span style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%); color: #d4af37; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(212, 175, 55, 0.3);">${data.opponent.region}</span>
+                                            <span style="background: rgba(255, 255, 255, 0.08); color: #b8b8b8; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1);">${data.opponent.ageGroup}</span>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div style="text-align: right;">
-                                    <div style="color: ${parseFloat(data.winRate) >= 50 ? '#10b981' : '#ef4444'}; font-weight: 700; font-size: 1.5rem; margin-bottom: 0.5rem;">
-                                        ${data.winRate}%
+                                <!-- 가운데: 통계 정보 3열 -->
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; width: 55%; flex-shrink: 0;">
+                                    <div style="text-align: center; padding: 1.8rem 1rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%); border-radius: 16px; border: 1px solid rgba(16, 185, 129, 0.2); transition: all 0.3s ease;"
+                                         onmouseenter="this.style.background='linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.08) 100%)'; this.style.transform='scale(1.02)'"
+                                         onmouseleave="this.style.background='linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%)'; this.style.transform='scale(1)'">
+                                        <div style="color: #a7f3d0; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">승률</div>
+                                        <div style="color: ${parseFloat(data.winRate) >= 50 ? '#10b981' : '#ef4444'}; font-weight: 800; font-size: 1.8rem; line-height: 1;">
+                                            ${data.winRate}%
+                                        </div>
                                     </div>
-                                    <div style="color: #888888; font-size: 0.9rem; margin-bottom: 0.5rem;">
-                                        ${data.wins}승 ${data.losses}패 ${data.draws}무
+                                    <div style="text-align: center; padding: 1.8rem 1rem; background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%); border-radius: 16px; border: 1px solid rgba(251, 191, 36, 0.2); transition: all 0.3s ease;"
+                                         onmouseenter="this.style.background='linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.08) 100%)'; this.style.transform='scale(1.02)'"
+                                         onmouseleave="this.style.background='linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%)'; this.style.transform='scale(1)'">
+                                        <div style="color: #fde68a; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">전적</div>
+                                        <div style="color: #fbbf24; font-weight: 700; font-size: 1.1rem; line-height: 1.3;">
+                                            ${data.wins}승 ${data.losses}패 ${data.draws}무
+                                        </div>
                                     </div>
-                                    <div style="color: #cccccc; font-size: 0.8rem;">
-                                        총 ${data.totalGames}경기
+                                    <div style="text-align: center; padding: 1.8rem 1rem; background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(96, 165, 250, 0.05) 100%); border-radius: 16px; border: 1px solid rgba(96, 165, 250, 0.2); transition: all 0.3s ease;"
+                                         onmouseenter="this.style.background='linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(96, 165, 250, 0.08) 100%)'; this.style.transform='scale(1.02)'"
+                                         onmouseleave="this.style.background='linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(96, 165, 250, 0.05) 100%)'; this.style.transform='scale(1)'">
+                                        <div style="color: #bfdbfe; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">총 경기</div>
+                                        <div style="color: #60a5fa; font-weight: 700; font-size: 1.4rem; line-height: 1;">
+                                            ${data.totalGames}경기
+                                        </div>
                                     </div>
                                 </div>
                                 
-                                <!-- H2H 상세 보기 버튼 -->
-                                <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(212, 175, 55, 0.1); color: #d4af37; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(212, 175, 55, 0.3);">
-                                    상세 분석 보기 →
+                                <!-- 오른쪽: 상세 분석 버튼 -->
+                                <div style="width: 20%; display: flex; justify-content: center; align-items: center;">
+                                    <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.1) 100%); color: #d4af37; padding: 1rem 1.5rem; border-radius: 25px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.3); transition: all 0.3s ease; backdrop-filter: blur(10px); cursor: pointer; text-align: center; white-space: nowrap;"
+                                         onmouseenter="this.style.background='linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0.15) 100%)'; this.style.transform='scale(1.05)'; this.style.borderColor='rgba(212, 175, 55, 0.5)'"
+                                         onmouseleave="this.style.background='linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.1) 100%)'; this.style.transform='scale(1)'; this.style.borderColor='rgba(212, 175, 55, 0.3)'">
+                                        <div style="margin-bottom: 0.25rem;">상세 분석</div>
+                                        <div style="font-size: 1.2rem; transition: transform 0.3s ease;" onmouseenter="this.style.transform='translateX(2px)'" onmouseleave="this.style.transform='translateX(0)'">→</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

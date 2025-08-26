@@ -184,7 +184,8 @@
                 avgScore: 3.2,
                 recentMatches: ['W', 'L', 'W', 'D', 'W'],
                 founded: 2010,
-                logo: "레"
+                logo: "레",
+                logoImage: "assets/emblems/leopards.png"
             },
             {
                 id: 2,
@@ -316,8 +317,11 @@
                     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: ${color.bg}; background-size: 200% 100%; animation: shimmer 3s ease-in-out infinite;"></div>
                     
                     <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
-                        <div style="width: 80px; height: 80px; background: ${color.bg}; border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.4); flex-shrink: 0;">
-                            <span style="font-size: 2rem; font-weight: 800; color: ${color.text}; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${team.logo}</span>
+                        <div style="width: 100px; height: 100px; background: ${team.logoImage ? 'transparent' : color.bg}; border-radius: 25px; display: flex; align-items: center; justify-content: center; box-shadow: ${team.logoImage ? 'none' : '0 12px 30px rgba(' + (color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212') + ', 0.4)'}; flex-shrink: 0; overflow: hidden;">
+                            ${team.logoImage ? 
+                                `<img src="${team.logoImage}" alt="${team.name} 로고" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;">` :
+                                `<span style="font-size: 2rem; font-weight: 800; color: ${color.text}; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${team.logo}</span>`
+                            }
                         </div>
                         <div style="flex: 1; min-width: 0;">
                             <h3 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0; margin-bottom: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${team.name}</h3>
@@ -329,16 +333,16 @@
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; margin-bottom: 2rem; align-items: stretch;">
-                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.1); border-radius: 12px; border: 1px solid rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.3); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
-                            <div style="font-size: 1.6rem; font-weight: 800; color: ${color.stats}; margin-bottom: 0.3rem; line-height: 1;">${team.winRate}%</div>
+                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
+                            <div style="font-size: 1.6rem; font-weight: 800; color: ${team.winRate >= 50 ? '#3b82f6' : team.winRate <= 30 ? '#ef4444' : '#ffffff'}; margin-bottom: 0.3rem; line-height: 1;">${team.winRate}%</div>
                             <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500; line-height: 1; white-space: nowrap;">승률</div>
                         </div>
-                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.08); border-radius: 12px; border: 1px solid rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.25); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
-                            <div style="font-size: 1.6rem; font-weight: 800; color: ${color.stats}; margin-bottom: 0.3rem; line-height: 1;">${team.totalMatches}</div>
+                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
+                            <div style="font-size: 1.6rem; font-weight: 800; color: #ffffff; margin-bottom: 0.3rem; line-height: 1;">${team.totalMatches}</div>
                             <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500; line-height: 1; white-space: nowrap;">총 경기</div>
                         </div>
-                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.06); border-radius: 12px; border: 1px solid rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.2); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
-                            <div style="font-size: 1.6rem; font-weight: 800; color: ${color.stats}; margin-bottom: 0.3rem; line-height: 1;">${team.avgScore}</div>
+                        <div style="text-align: center; padding: 1.2rem 0.8rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; justify-content: center; min-height: 80px;">
+                            <div style="font-size: 1.6rem; font-weight: 800; color: ${team.avgScore > 1.5 ? '#3b82f6' : '#ef4444'}; margin-bottom: 0.3rem; line-height: 1;">${team.avgScore}</div>
                             <div style="font-size: 0.8rem; color: #cccccc; font-weight: 500; line-height: 1; white-space: nowrap;">평균득점</div>
                         </div>
                     </div>
@@ -351,10 +355,14 @@
                     </div>
                     
                     <div style="display: flex; gap: 1rem; align-items: stretch;">
-                        <a href="team.html?id=${team.id}" style="flex: 1; text-align: center; padding: 1rem; background: ${color.bg}; color: ${color.text}; text-decoration: none; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(${color.stats === '#3b82f6' ? '59, 130, 246' : color.stats === '#10b981' ? '16, 185, 129' : color.stats === '#f59e0b' ? '245, 158, 11' : color.stats === '#ef4444' ? '239, 68, 68' : color.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.3); display: flex; align-items: center; justify-content: center; min-height: 50px; white-space: nowrap;">
+                        <a href="team.html?id=${team.id}" style="flex: 1; text-align: center; padding: 1rem; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); color: #ffffff; text-decoration: none; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; min-height: 50px; white-space: nowrap;"
+                               onmouseenter="this.style.background='linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%)'; this.style.transform='translateY(-2px)'"
+                               onmouseleave="this.style.background='linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)'; this.style.transform='translateY(0)'">
                             상세 보기
                         </a>
-                        <a href="h2h.html?team1=${team.id}" style="flex: 1; text-align: center; padding: 1rem; background: transparent; color: ${color.stats}; text-decoration: none; border: 2px solid ${color.stats}; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; min-height: 50px; white-space: nowrap;">
+                        <a href="h2h.html?team1=${team.id}" style="flex: 1; text-align: center; padding: 1rem; background: transparent; color: #cccccc; text-decoration: none; border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; min-height: 50px; white-space: nowrap;"
+                               onmouseenter="this.style.borderColor='rgba(255, 255, 255, 0.4)'; this.style.color='#ffffff'; this.style.transform='translateY(-2px)'"
+                               onmouseleave="this.style.borderColor='rgba(255, 255, 255, 0.2)'; this.style.color='#cccccc'; this.style.transform='translateY(0)'">
                             H2H
                         </a>
                     </div>
