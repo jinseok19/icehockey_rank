@@ -257,9 +257,9 @@ function renderTeamHeader() {
         <div style="display: grid; grid-template-columns: auto 1fr; gap: 5rem; align-items: start; margin-bottom: 3rem;">
             <!-- 팀 로고 및 기본 정보 -->
             <div style="display: flex; gap: 3rem; align-items: center;">
-                <div style="width: 420px; height: 420px; background: ${currentTeam.logoImage ? 'transparent' : teamColor.bg}; border-radius: 64px; display: flex; align-items: center; justify-content: center; box-shadow: ${currentTeam.logoImage ? 'none' : '0 24px 60px rgba(212, 175, 55, 0.4)'}; border: ${currentTeam.logoImage ? 'none' : '2px solid rgba(212, 175, 55, 0.3)'}; overflow: hidden;">
+                <div style="width: 280px; height: 300px; background: ${currentTeam.logoImage ? 'transparent' : teamColor.bg}; border-radius: 48px; display: flex; align-items: center; justify-content: center; box-shadow: ${currentTeam.logoImage ? 'none' : '0 24px 60px rgba(212, 175, 55, 0.4)'}; border: ${currentTeam.logoImage ? 'none' : '2px solid rgba(212, 175, 55, 0.3)'}; overflow: hidden;">
                     ${currentTeam.logoImage ? 
-                        `<img src="${currentTeam.logoImage}" alt="${currentTeam.name} 로고" style="width: 100%; height: 100%; object-fit: contain; border-radius: 64px;">` :
+                        `<img src="${currentTeam.logoImage}" alt="${currentTeam.name} 로고" style="width: 100%; height: 100%; object-fit: cover; border-radius: 48px;">` :
                         `<span style="font-size: 4rem; font-weight: 800; color: ${teamColor.text}; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${currentTeam.logo}</span>`
                     }
                 </div>
