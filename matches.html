@@ -3,57 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>경기 결과 - 아이스하키 클럽 랭킹</title>
-    <meta name="description" content="유소년 아이스하키 클럽팀 경기 결과 및 상세 정보">
+    <title>대회 및 리그 - 아이스하키 클럽 랭킹</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body style="background: #000000; color: #ffffff; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;">
-    <main class="main" style="min-height: 100vh; background: #000000; color: #ffffff; position: relative;">
-        <!-- 히어로 섹션 -->
-        <section class="hero-section" style="padding: 6rem 2rem 4rem; text-align: center; background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%); position: relative; overflow: hidden;">
-            <!-- 배경 패턴 -->
-            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.02) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.02) 0%, transparent 50%);"></div>
-            
-            <div class="hero-content" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;">
-                <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: #ffffff; margin-bottom: 1.5rem; letter-spacing: -0.02em;">
-                    경기 결과
-                </h1>
-                <p style="font-size: 1.25rem; color: #cbd5e1; font-weight: 400; max-width: 600px; margin: 0 auto; line-height: 1.6;">
-                    전체 아이스하키 클럽팀의 경기 결과와 상세 정보를 확인하세요
-                </p>
-            </div>
-        </section>
+<body>
+    <!-- 헤더 포함 -->
+    <div id="header-placeholder"></div>
 
-        <!-- 경기 결과 섹션 -->
-        <section class="all-matches" style="padding: 4rem 2rem; background: #0a0a0a;">
-            <div style="max-width: 1200px; margin: 0 auto;">
-                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;">
-                    <h2 style="font-size: 2rem; font-weight: 600; color: #ffffff; margin: 0;">
-                        🏒 전체 경기 결과
-                    </h2>
-                    <div class="matches-controls" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                        <select id="matches-sort" class="filter-select" style="padding: 0.75rem 1rem; border: 1px solid #1e293b; border-radius: 8px; background-color: #0a0a0a; color: #ffffff; font-size: 0.875rem; cursor: pointer; transition: border-color 0.3s; min-width: 120px;">
-                            <option value="date">날짜순</option>
-                            <option value="homeTeam">홈팀순</option>
-                            <option value="awayTeam">원정팀순</option>
-                            <option value="league">리그순</option>
-                        </select>
-                        <input type="text" id="matches-search" class="search-input small" placeholder="팀명 또는 리그로 검색" style="padding: 0.75rem 1rem; border: 1px solid #1e293b; border-radius: 8px; background-color: #0a0a0a; color: #ffffff; font-size: 0.875rem; transition: border-color 0.3s; min-width: 200px;">
-                    </div>
+    <main style="padding: 2rem; background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%); min-height: 100vh;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <!-- 브레드크럼 -->
+            <section style="margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: #888888; font-size: 0.9rem;">
+                    <a href="index.html" style="color: #888888; text-decoration: none; transition: color 0.3s ease;">홈</a>
+                    <span>›</span>
+                    <span style="color: #ffffff;">대회</span>
                 </div>
-                
-                <div id="all-matches-grid" class="matches-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
-                    <!-- 전체 경기가 여기에 렌더링됩니다 -->
+            </section>
+
+            <!-- 페이지 헤더 -->
+            <section style="margin-bottom: 3rem; text-align: center;">
+                <h1 style="font-size: 3rem; font-weight: 800; color: #ffffff; margin: 0 0 1rem 0; text-shadow: 0 2px 20px rgba(0,0,0,0.3);">대회 및 리그</h1>
+                <p style="font-size: 1.2rem; color: #cccccc; margin: 0; max-width: 600px; margin: 0 auto;">아이스하키 리그 및 토너먼트 정보를 확인하세요</p>
+            </section>
+
+            <!-- 필터 섹션 -->
+            <section style="margin-bottom: 3rem;">
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <select id="season-filter" style="padding: 0.75rem 1rem; background: #1a1a1a; color: #ffffff; border: 1px solid #333333; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+                        <option value="">모든 시즌</option>
+                        <option value="2024">2024 시즌</option>
+                        <option value="2023">2023 시즌</option>
+                    </select>
+                    
+                    <select id="age-filter" style="padding: 0.75rem 1rem; background: #1a1a1a; color: #ffffff; border: 1px solid #333333; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+                        <option value="">모든 연령</option>
+                        <option value="U12">U12</option>
+                        <option value="U14">U14</option>
+                        <option value="U15">U15</option>
+                        <option value="U16">U16</option>
+                        <option value="U18">U18</option>
+                    </select>
+
+                    <select id="status-filter" style="padding: 0.75rem 1rem; background: #1a1a1a; color: #ffffff; border: 1px solid #333333; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+                        <option value="">모든 상태</option>
+                        <option value="진행중">진행중</option>
+                        <option value="예정">예정</option>
+                        <option value="완료">완료</option>
+                    </select>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <!-- 리그 목록 -->
+            <section>
+                <div id="leagues-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 2rem;">
+                    <!-- 리그 목록이 여기에 렌더링됩니다 -->
+                </div>
+            </section>
+        </div>
     </main>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- 푸터 포함 -->
+    <div id="footer-placeholder"></div>
+
     <script src="js/common.js"></script>
     <script src="js/app.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/matches.js"></script>
 </body>
 </html>

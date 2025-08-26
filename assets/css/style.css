@@ -340,18 +340,28 @@ body {
   position: sticky;
   top: 0;
   background-color: #000000;
-  border-bottom: 1px solid #919497; /* Changed from #1e293b to gold */
+  border-bottom: 1px solid #919497;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   z-index: 100;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  left: 0;
+  right: 0;
 }
 
 .header-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.5rem 0 0.5rem 0;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 70px;
+  width: 100%;
 }
 
 .logo {
@@ -361,12 +371,17 @@ body {
   color: #ffffff;
   text-decoration: none;
   font-weight: 700;
-  font-size: 1.5rem; /* Changed from default to larger size */
+  font-size: 1.5rem;
+  margin-left: 1rem;
 }
 
-.logo img {
-  width: 3.5rem; /* Changed from default to larger size */
-  height: 3.5rem; /* Changed from default to larger size */
+.logo img,
+.logo-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin: 0;
+  padding: 0;
 }
 
 .logo-link {
@@ -374,29 +389,28 @@ body {
   color: inherit;
 }
 
-.logo-img {
-  width: 32px;
-  height: 32px;
-}
-
 /* 검색 */
 .search-container {
-  flex: 1;
-  max-width: 500px;
+  flex: 1 !important;
+  max-width: 800px;
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-right: 1rem;
 }
 
 .search-wrapper {
   position: relative;
+  width: 400px;
 }
 
 .search-input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1.25rem;
   border: 1px solid #1e293b;
   border-radius: var(--radius);
   background-color: #0a0a0a;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -468,6 +482,14 @@ body {
 
 .suggestion-item:last-child {
   border-bottom: none;
+}
+
+/* 오른쪽 그룹 */
+.header-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 2rem;
+  padding-right: 1rem;
 }
 
 /* 헤더 필터 */

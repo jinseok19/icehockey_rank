@@ -230,9 +230,9 @@ function forceStyleApplication() {
         const overviewTab = document.getElementById('tab-overview');
         if (overviewTab) {
             overviewTab.style.color = '#ffffff';
-            overviewTab.style.borderBottomColor = '#d4af37';
+            overviewTab.style.borderBottomColor = '#ffffff';
             overviewTab.style.fontWeight = '700';
-            overviewTab.style.background = 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%)';
+            overviewTab.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)';
         }
         
         // 컨테이너 최대 너비 확장
@@ -257,7 +257,7 @@ function renderTeamHeader() {
         <div style="display: grid; grid-template-columns: auto 1fr; gap: 5rem; align-items: start; margin-bottom: 3rem;">
             <!-- 팀 로고 및 기본 정보 -->
             <div style="display: flex; gap: 3rem; align-items: center;">
-                <div style="width: 280px; height: 300px; background: ${currentTeam.logoImage ? 'transparent' : teamColor.bg}; border-radius: 48px; display: flex; align-items: center; justify-content: center; box-shadow: ${currentTeam.logoImage ? 'none' : '0 24px 60px rgba(212, 175, 55, 0.4)'}; border: ${currentTeam.logoImage ? 'none' : '2px solid rgba(212, 175, 55, 0.3)'}; overflow: hidden;">
+                <div style="width: 280px; height: 280px; background: ${currentTeam.logoImage ? 'transparent' : teamColor.bg}; border-radius: 48px; display: flex; align-items: center; justify-content: center; box-shadow: ${currentTeam.logoImage ? 'none' : '0 24px 60px rgba(212, 175, 55, 0.4)'}; border: ${currentTeam.logoImage ? 'none' : '2px solid rgba(212, 175, 55, 0.3)'}; overflow: hidden;">
                     ${currentTeam.logoImage ? 
                         `<img src="${currentTeam.logoImage}" alt="${currentTeam.name} 로고" style="width: 100%; height: 100%; object-fit: cover; border-radius: 48px;">` :
                         `<span style="font-size: 4rem; font-weight: 800; color: ${teamColor.text}; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">${currentTeam.logo}</span>`
@@ -328,9 +328,9 @@ function setupTabNavigation() {
             // 클릭된 탭 버튼 활성화
             button.classList.add('active');
             button.style.color = '#ffffff';
-            button.style.borderBottomColor = '#d4af37';
+            button.style.borderBottomColor = '#ffffff';
             button.style.fontWeight = '700';
-            button.style.background = 'linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%)';
+            button.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)';
             
             // 모든 탭 콘텐츠 숨기기
             tabContents.forEach(content => {
@@ -357,7 +357,7 @@ function renderOverviewContent() {
             <!-- 팀 정보 카드 -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
                 <div class="stat-card" style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 2rem;">
-                    <h3 style="color: ${teamColor.stats}; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">팀 정보</h3>
+                    <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">팀 정보</h3>
                     <div style="display: grid; gap: 1rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">감독</span>
@@ -379,7 +379,7 @@ function renderOverviewContent() {
                 </div>
                 
                 <div class="stat-card" style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 2rem;">
-                    <h3 style="color: ${teamColor.stats}; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">시즌 기록</h3>
+                    <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">시즌 기록</h3>
                     <div style="display: grid; gap: 1rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">승리</span>
@@ -395,7 +395,7 @@ function renderOverviewContent() {
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
                             <span style="color: #888888;">승률</span>
-                            <span style="color: ${teamColor.stats}; font-weight: 700; font-size: 1.1rem;">${currentTeam.winRate}%</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${currentTeam.winRate}%</span>
                         </div>
                     </div>
                 </div>
@@ -403,17 +403,17 @@ function renderOverviewContent() {
             
             <!-- 성과 및 하이라이트 -->
             <div class="stat-card" style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 2rem;">
-                <h3 style="color: ${teamColor.stats}; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">주요 성과</h3>
+                <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">주요 성과</h3>
                 <div style="display: grid; gap: 1rem;">
-                    <div style="padding: 1rem; background: rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.1); border-radius: 12px; border-left: 4px solid ${teamColor.stats};">
+                    <div style="padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid #ffffff;">
                         <div style="color: #ffffff; font-weight: 600; margin-bottom: 0.5rem;">2024 시즌 현재 순위</div>
                         <div style="color: #cccccc; font-size: 0.9rem;">리그 ${currentTeam.ageGroup} 부문에서 상위 ${Math.ceil((1 - currentTeam.winRate/100) * 10)}위 기록</div>
                     </div>
-                    <div style="padding: 1rem; background: rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.1); border-radius: 12px; border-left: 4px solid ${teamColor.stats};">
+                    <div style="padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid #ffffff;">
                         <div style="color: #ffffff; font-weight: 600; margin-bottom: 0.5rem;">최고 연승 기록</div>
                         <div style="color: #cccccc; font-size: 0.9rem;">${Math.floor(Math.random() * 5) + 3}연승 달성 (${2023 + Math.floor(Math.random() * 2)}년)</div>
                     </div>
-                    <div style="padding: 1rem; background: rgba(${teamColor.stats === '#3b82f6' ? '59, 130, 246' : teamColor.stats === '#10b981' ? '16, 185, 129' : teamColor.stats === '#f59e0b' ? '245, 158, 11' : teamColor.stats === '#ef4444' ? '239, 68, 68' : teamColor.stats === '#8b5cf6' ? '139, 92, 246' : '6, 182, 212'}, 0.1); border-radius: 12px; border-left: 4px solid ${teamColor.stats};">
+                    <div style="padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid #ffffff;">
                         <div style="color: #ffffff; font-weight: 600; margin-bottom: 0.5rem;">팀 특별상</div>
                         <div style="color: #cccccc; font-size: 0.9rem;">페어플레이상 수상 (2023년), 최우수 팀워크상 후보</div>
                     </div>
@@ -432,67 +432,67 @@ function renderStatsContent() {
             <!-- 공격 통계 -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
                 <div class="stat-card" style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 2rem;">
-                    <h3 style="color: #10b981; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">공격 통계</h3>
+                    <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">공격 통계</h3>
                     <div style="display: grid; gap: 1rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">총 득점</span>
-                            <span style="color: #10b981; font-weight: 700; font-size: 1.1rem;">${currentTeam.goals}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${currentTeam.goals}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">어시스트</span>
-                            <span style="color: #10b981; font-weight: 700; font-size: 1.1rem;">${currentTeam.assists}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${currentTeam.assists}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">파워플레이 골</span>
-                            <span style="color: #10b981; font-weight: 700; font-size: 1.1rem;">${currentTeam.powerPlayGoals}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${currentTeam.powerPlayGoals}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
                             <span style="color: #888888;">숏핸디드 골</span>
-                            <span style="color: #10b981; font-weight: 700; font-size: 1.1rem;">${currentTeam.shortHandedGoals}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${currentTeam.shortHandedGoals}</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="stat-card" style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 2rem;">
-                    <h3 style="color: #ef4444; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">수비 통계</h3>
+                    <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">수비 통계</h3>
                     <div style="display: grid; gap: 1rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">실점</span>
-                            <span style="color: #ef4444; font-weight: 700; font-size: 1.1rem;">${currentTeam.goalsAgainst}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${currentTeam.goalsAgainst}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">경기당 실점</span>
-                            <span style="color: #ef4444; font-weight: 700; font-size: 1.1rem;">${(currentTeam.goalsAgainst / currentTeam.totalMatches).toFixed(1)}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${(currentTeam.goalsAgainst / currentTeam.totalMatches).toFixed(1)}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">페널티</span>
-                            <span style="color: #f59e0b; font-weight: 700; font-size: 1.1rem;">${currentTeam.penalties}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${currentTeam.penalties}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
                             <span style="color: #888888;">골 차이</span>
-                            <span style="color: ${currentTeam.goals - currentTeam.goalsAgainst > 0 ? '#10b981' : '#ef4444'}; font-weight: 700; font-size: 1.1rem;">${currentTeam.goals - currentTeam.goalsAgainst > 0 ? '+' : ''}${currentTeam.goals - currentTeam.goalsAgainst}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${currentTeam.goals - currentTeam.goalsAgainst > 0 ? '+' : ''}${currentTeam.goals - currentTeam.goalsAgainst}</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="stat-card" style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 2rem;">
-                    <h3 style="color: ${teamColor.stats}; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">효율성 지표</h3>
+                    <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">효율성 지표</h3>
                     <div style="display: grid; gap: 1rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">경기당 득점</span>
-                            <span style="color: ${teamColor.stats}; font-weight: 700; font-size: 1.1rem;">${(currentTeam.goals / currentTeam.totalMatches).toFixed(1)}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${(currentTeam.goals / currentTeam.totalMatches).toFixed(1)}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">파워플레이 효율</span>
-                            <span style="color: ${teamColor.stats}; font-weight: 700; font-size: 1.1rem;">${((currentTeam.powerPlayGoals / (currentTeam.penalties * 0.3)) * 100).toFixed(1)}%</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${((currentTeam.powerPlayGoals / (currentTeam.penalties * 0.3)) * 100).toFixed(1)}%</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a2a;">
                             <span style="color: #888888;">어시스트 비율</span>
-                            <span style="color: ${teamColor.stats}; font-weight: 700; font-size: 1.1rem;">${((currentTeam.assists / currentTeam.goals) * 100).toFixed(0)}%</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${((currentTeam.assists / currentTeam.goals) * 100).toFixed(0)}%</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
                             <span style="color: #888888;">경기당 페널티</span>
-                            <span style="color: ${teamColor.stats}; font-weight: 700; font-size: 1.1rem;">${(currentTeam.penalties / currentTeam.totalMatches).toFixed(1)}</span>
+                            <span style="color: #ffffff; font-weight: 700; font-size: 1.1rem;">${(currentTeam.penalties / currentTeam.totalMatches).toFixed(1)}</span>
                         </div>
                     </div>
                 </div>
@@ -524,7 +524,7 @@ function renderMatchesContent() {
     
     matchesElement.innerHTML = `
         <div style="display: grid; gap: 1.5rem;">
-            <h3 style="color: ${teamColor.stats}; margin-bottom: 1rem; font-size: 1.5rem; font-weight: 700;">최근 10경기</h3>
+            <h3 style="color: #ffffff; margin-bottom: 1rem; font-size: 1.5rem; font-weight: 700;">최근 10경기</h3>
             ${recentMatches.map(match => {
                 const resultColor = match.result === 'W' ? '#10b981' : match.result === 'L' ? '#ef4444' : '#f59e0b';
                 const resultText = match.result === 'W' ? '승리' : match.result === 'L' ? '패배' : '무승부';
@@ -582,8 +582,8 @@ function renderH2HContent() {
     h2hElement.innerHTML = `
         <div style="display: grid; gap: 2rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3 style="color: ${teamColor.stats}; margin: 0; font-size: 1.5rem; font-weight: 700;">상대전적 분석</h3>
-                <button id="go-to-h2h-selector" style="background: linear-gradient(135deg, #d4af37, #f4d03f); color: #000; border: none; padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); display: flex; align-items: center; gap: 0.5rem;">
+                <h3 style="color: #ffffff; margin: 0; font-size: 1.5rem; font-weight: 700;">상대전적 분석</h3>
+                <button id="go-to-h2h-selector" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
                     <span>팀 비교 페이지</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M7 17L17 7"></path>

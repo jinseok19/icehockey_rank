@@ -1,507 +1,450 @@
-// 경기 상세 페이지 관리자
-const MatchManager = {
-  init() {
-    this.currentMatch = null;
-    this.currentTab = 'summary';
-    
-    this.loadMatchData();
-    this.bindEvents();
-    this.initTabs();
-  },
+// 리그 상세 페이지 관리자
+let currentLeague = null;
+let leaguesData = [];
+let teamsData = [];
 
-  async loadMatchData() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const matchId = urlParams.get('id');
-    
-    if (!matchId) {
-      this.showError('경기 ID가 지정되지 않았습니다.');
-      return;
-    }
+// 페이지 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    loadData().then(() => {
+        initLeagueDetailPage();
+    });
+});
 
+// 데이터 로드
+async function loadData() {
     try {
-      // 경기 데이터 찾기
-      this.currentMatch = AppState.matches.find(match => match.id === matchId);
+        // 리그 데이터 로드
+        const leaguesResponse = await fetch('data/leagues.json');
+        const leaguesJson = await leaguesResponse.json();
+        leaguesData = leaguesJson.leagues;
 
-      if (!this.currentMatch) {
-        this.showError(`경기 ID "${matchId}"에 해당하는 경기를 찾을 수 없습니다.`);
-        return;
-      }
+        // 팀 데이터 (기존 데이터 재사용)
+        teamsData = [
+            { id: 1, name: "레오파즈", logo: "레", region: "서울", ageGroup: "U16" },
+            { id: 2, name: "타이거스", logo: "타", region: "부산", ageGroup: "U18" },
+            { id: 3, name: "베어스", logo: "베", region: "대구", ageGroup: "U15" },
+            { id: 4, name: "이글스", logo: "이", region: "인천", ageGroup: "U12" },
+            { id: 5, name: "울브즈", logo: "울", region: "광주", ageGroup: "U14" },
+            { id: 6, name: "샤크스", logo: "샤", region: "대전", ageGroup: "U16" }
+        ];
 
-      // 경기 페이지 렌더링
-      this.renderMatchPage();
-      
-      // 기본 탭 표시
-      this.showTab('summary');
-
+        console.log('데이터 로드 완료:', { leaguesData, teamsData });
     } catch (error) {
-      console.error('경기 데이터 로드 오류:', error);
-      this.showError('경기 데이터를 불러오는 중 오류가 발생했습니다.');
+        console.error('데이터 로드 실패:', error);
     }
-  },
+}
 
-  renderMatchPage() {
-    if (!this.currentMatch) return;
-
-    // 페이지 제목 업데이트
-    const homeTeam = Utils.findTeamById(this.currentMatch.homeTeam);
-    const awayTeam = Utils.findTeamById(this.currentMatch.awayTeam);
+// 리그 상세 페이지 초기화
+function initLeagueDetailPage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const leagueId = urlParams.get('league');
     
-    if (homeTeam && awayTeam) {
-      document.title = `${homeTeam.name} vs ${awayTeam.name} - 아이스하키 랭킹`;
+    if (!leagueId) return;
+
+    currentLeague = leaguesData.find(league => league.id === leagueId);
+    if (!currentLeague) return;
+
+    renderLeagueHeader();
+    renderLeagueContent();
+    setupTabs();
+}
+
+// 리그 헤더 렌더링
+function renderLeagueHeader() {
+    const headerElement = document.getElementById('league-header');
+    const breadcrumbElement = document.getElementById('league-breadcrumb');
+    
+    if (breadcrumbElement) {
+        breadcrumbElement.textContent = currentLeague.name;
     }
 
-    // 경기 요약 렌더링
-    this.renderMatchSummary();
-    
-    // 경기 통계 요약 렌더링
-    this.renderMatchStatsSummary();
-    
-    // 스코어보드 렌더링
-    this.renderScoreboard();
-    
-    // 타임라인 렌더링
-    this.renderTimeline();
-    
-    // 선수 명단 렌더링
-    this.renderPlayers();
-    
-    // 반칙 로그 렌더링
-    this.renderPenalties();
-  },
+    if (headerElement) {
+        const statusColor = getStatusColor(currentLeague.status);
+        const progress = currentLeague.totalMatches > 0 ? 
+            Math.round((currentLeague.completedMatches / currentLeague.totalMatches) * 100) : 0;
 
-  renderMatchSummary() {
-    const matchSummary = document.querySelector('.match-summary');
-    if (!matchSummary) return;
+        headerElement.innerHTML = `
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 3rem; align-items: start;">
+                <div style="display: flex; gap: 2rem; align-items: center;">
+                    <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+                                border-radius: 24px; display: flex; align-items: center; justify-content: center; 
+                                font-size: 3rem;">${currentLeague.logo}</div>
+                    
+                    <div style="min-width: 400px;">
+                        <h1 style="font-size: 2.5rem; font-weight: 800; color: #ffffff; margin: 0 0 1rem 0;">${currentLeague.name}</h1>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <span style="background: ${statusColor}; color: #ffffff; padding: 0.5rem 1rem; 
+                                         border-radius: 20px; font-size: 0.8rem; font-weight: 600;">${currentLeague.status}</span>
+                            <span style="background: rgba(255, 255, 255, 0.1); color: #ffffff; padding: 0.5rem 1rem; 
+                                         border-radius: 20px; font-size: 0.8rem; font-weight: 600;">${currentLeague.ageGroup}</span>
+                            <span style="background: rgba(255, 255, 255, 0.1); color: #ffffff; padding: 0.5rem 1rem; 
+                                         border-radius: 20px; font-size: 0.8rem; font-weight: 600;">${currentLeague.format}</span>
+                        </div>
+                        <p style="color: #cccccc; line-height: 1.6; margin: 0; font-size: 1rem;">${currentLeague.description}</p>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; 
+                            border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 1.2rem; font-weight: 700;">대회 정보</h3>
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #888888;">주최</span>
+                            <span style="color: #ffffff; font-weight: 600;">${currentLeague.organizer}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #888888;">장소</span>
+                            <span style="color: #ffffff; font-weight: 600;">${currentLeague.location}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #888888;">기간</span>
+                            <span style="color: #ffffff; font-weight: 600;">${formatDateRange(currentLeague.startDate, currentLeague.endDate)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #888888;">참가팀</span>
+                            <span style="color: #ffffff; font-weight: 600;">${currentLeague.teams.length}팀</span>
+                        </div>
+                        ${currentLeague.status === '진행중' ? `
+                        <div style="margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: #888888;">진행률</span>
+                                <span style="color: #ffffff; font-weight: 600;">${progress}%</span>
+                            </div>
+                            <div style="background: #2a2a2a; border-radius: 10px; height: 8px;">
+                                <div style="background: linear-gradient(90deg, #10b981, #34d399); height: 100%; 
+                                            width: ${progress}%; border-radius: 10px;"></div>
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
 
-    const homeTeam = Utils.findTeamById(this.currentMatch.homeTeam);
-    const awayTeam = Utils.findTeamById(this.currentMatch.awayTeam);
-    
-    if (!homeTeam || !awayTeam) return;
+// 리그 콘텐츠 렌더링
+function renderLeagueContent() {
+    renderInfoContent();
+    renderLeaderboardContent();
+    renderMatchesContent();
+    renderScheduleContent();
+}
 
-    matchSummary.innerHTML = `
-      <div class="match-header-info">
-        <div class="match-teams">
-          <div class="team home-team">
-            <div class="team-emblem" style="background-color: ${homeTeam.colors[0]}; color: ${homeTeam.colors[1]}">
-              ${homeTeam.name.charAt(0)}
+// 대회 정보 탭
+function renderInfoContent() {
+    const infoElement = document.getElementById('info-content');
+    if (!infoElement) return;
+
+    infoElement.innerHTML = `
+        <div style="display: grid; gap: 2rem;">
+            <div style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; 
+                        border-radius: 20px; padding: 2rem;">
+                <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-size: 1.3rem; font-weight: 700;">대회 개요</h3>
+                <div style="display: grid; gap: 1.5rem;">
+                    <div>
+                        <h4 style="color: #ffffff; margin-bottom: 0.5rem; font-weight: 600;">대회 설명</h4>
+                        <p style="color: #cccccc; line-height: 1.6; margin: 0;">${currentLeague.description}</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #ffffff; margin-bottom: 0.5rem; font-weight: 600;">상품 및 혜택</h4>
+                        <p style="color: #cccccc; margin: 0;">${currentLeague.prize}</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #ffffff; margin-bottom: 0.5rem; font-weight: 600;">경기장</h4>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            ${currentLeague.venues.map(venue => `
+                                <span style="background: rgba(255, 255, 255, 0.1); padding: 0.5rem 1rem; 
+                                             border-radius: 12px; color: #ffffff; font-size: 0.9rem;">${venue}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="team-details">
-              <div class="team-name">${homeTeam.name}</div>
-              <div class="team-meta">${homeTeam.fullName} • ${homeTeam.ageGroup}</div>
-            </div>
-          </div>
-          
-          <div class="match-score">
-            <div class="score-display">
-              <span class="score">${this.currentMatch.homeScore}</span>
-              <span class="score-separator">-</span>
-              <span class="score">${this.currentMatch.awayScore}</span>
-            </div>
-            <div class="match-status">${this.currentMatch.competition}</div>
-          </div>
-          
-          <div class="team away-team">
-            <div class="team-details">
-              <div class="team-name">${awayTeam.name}</div>
-              <div class="team-meta">${awayTeam.fullName} • ${awayTeam.ageGroup}</div>
-            </div>
-            <div class="team-emblem" style="background-color: ${awayTeam.colors[0]}; color: ${awayTeam.colors[1]}">
-              ${awayTeam.name.charAt(0)}
-            </div>
-          </div>
         </div>
+    `;
+}
+
+// 리더보드 탭
+function renderLeaderboardContent() {
+    const leaderboardElement = document.getElementById('leaderboard-content');
+    if (!leaderboardElement) return;
+
+    // 가상의 리더보드 데이터 생성
+    const teams = currentLeague.teams.map(teamId => {
+        const team = teamsData.find(t => t.id === teamId);
+        if (!team) return null;
         
-        <div class="match-meta">
-          <div class="meta-item">
-            <i data-lucide="calendar"></i>
-            <span>${Utils.formatDate(this.currentMatch.date)}</span>
-          </div>
-          <div class="meta-item">
-            <i data-lucide="map-pin"></i>
-            <span>${this.currentMatch.venue}</span>
-          </div>
-          <div class="meta-item">
-            <i data-lucide="users"></i>
-            <span>${this.currentMatch.ageGroup}</span>
-          </div>
-        </div>
-      </div>
-    `;
-  },
+        const matches = Math.floor(Math.random() * 10) + 5;
+        const wins = Math.floor(Math.random() * matches);
+        const losses = Math.floor(Math.random() * (matches - wins));
+        const draws = matches - wins - losses;
+        const points = wins * 3 + draws;
+        
+        return {
+            ...team,
+            matches, wins, losses, draws, points,
+            goalsFor: Math.floor(Math.random() * 30) + 10,
+            goalsAgainst: Math.floor(Math.random() * 25) + 5
+        };
+    }).filter(Boolean).sort((a, b) => b.points - a.points);
 
-  renderMatchStatsSummary() {
-    const statsSummary = document.querySelector('.match-stats-summary');
-    if (!statsSummary) return;
-
-    statsSummary.innerHTML = `
-      <div class="stat-item">
-        <div class="stat-value">${this.currentMatch.homeShots}</div>
-        <div class="stat-label">홈팀 슛</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">${this.currentMatch.awayShots}</div>
-        <div class="stat-label">원정팀 슛</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">${this.currentMatch.homePenalties}</div>
-        <div class="stat-label">홈팀 반칙</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">${this.currentMatch.awayPenalties}</div>
-        <div class="stat-label">원정팀 반칙</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">${this.currentMatch.homePP}</div>
-        <div class="stat-label">홈팀 파워플레이</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">${this.currentMatch.awayPP}</div>
-        <div class="stat-label">원정팀 파워플레이</div>
-      </div>
-    `;
-  },
-
-  renderScoreboard() {
-    const scoreboardContainer = document.querySelector('.scoreboard-container');
-    if (!scoreboardContainer) return;
-
-    // 기간별 스코어
-    const periodsSummary = this.renderPeriodsSummary();
-    
-    // 득점자 목록
-    const scorersSummary = this.renderScorersSummary();
-    
-    // 파워플레이 요약
-    const powerPlaySummary = this.renderPowerPlaySummary();
-
-    scoreboardContainer.innerHTML = `
-      ${periodsSummary}
-      ${scorersSummary}
-      ${powerPlaySummary}
-    `;
-  },
-
-  renderPeriodsSummary() {
-    if (!this.currentMatch.periods || this.currentMatch.periods.length === 0) {
-      return `
-        <div class="periods-summary">
-          <h3>기간별 스코어</h3>
-          <p>기간별 스코어 데이터가 없습니다.</p>
-        </div>
-      `;
-    }
-
-    const periodsHTML = this.currentMatch.periods
-      .map(period => `
-        <div class="period-item">
-          <div class="period-number">${period.period}기</div>
-          <div class="period-score">${period.homeScore} - ${period.awayScore}</div>
-        </div>
-      `)
-      .join('');
-
-    return `
-      <div class="periods-summary">
-        <h3>기간별 스코어</h3>
-        <div class="periods-grid">
-          ${periodsHTML}
-        </div>
-      </div>
-    `;
-  },
-
-  renderScorersSummary() {
-    if (!this.currentMatch.scorers || this.currentMatch.scorers.length === 0) {
-      return `
-        <div class="scorers-summary">
-          <h3>득점자</h3>
-          <p>득점자 데이터가 없습니다.</p>
-        </div>
-      `;
-    }
-
-    const scorersHTML = this.currentMatch.scorers
-      .map(scorer => `
-        <div class="scorer-item ${scorer.team === 'home' ? 'home-scorer' : 'away-scorer'}">
-          <div class="scorer-info">
-            <div class="scorer-name">${scorer.player}</div>
-            <div class="scorer-team">${scorer.team === 'home' ? '홈팀' : '원정팀'}</div>
-          </div>
-          <div class="scorer-time">
-            <span>${scorer.period}기</span>
-            <span>${scorer.time}</span>
-          </div>
-        </div>
-      `)
-      .join('');
-
-    return `
-      <div class="scorers-summary">
-        <h3>득점자</h3>
-        <div class="scorers-list">
-          ${scorersHTML}
-        </div>
-      </div>
-    `;
-  },
-
-  renderPowerPlaySummary() {
-    const homeTeam = Utils.findTeamById(this.currentMatch.homeTeam);
-    const awayTeam = Utils.findTeamById(this.currentMatch.awayTeam);
-    
-    if (!homeTeam || !awayTeam) return '';
-
-    return `
-      <div class="power-play-summary">
-        <h3>파워플레이 통계</h3>
-        <div class="pp-stats">
-          <div class="pp-stat">
-            <span class="pp-label">${homeTeam.name} 파워플레이</span>
-            <span class="pp-value">${this.currentMatch.homePP}/${this.currentMatch.homePenalties}</span>
-          </div>
-          <div class="pp-stat">
-            <span class="pp-label">${awayTeam.name} 파워플레이</span>
-            <span class="pp-value">${this.currentMatch.awayPP}/${this.currentMatch.awayPenalties}</span>
-          </div>
-        </div>
-      </div>
-    `;
-  },
-
-  renderTimeline() {
-    const timelineContainer = document.querySelector('.timeline-container');
-    if (!timelineContainer) return;
-
-    // 득점과 반칙을 시간순으로 정렬
-    const events = this.createTimelineEvents();
-    
-    if (events.length === 0) {
-      timelineContainer.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">🏒</div>
-          <p>타임라인 데이터가 없습니다</p>
-        </div>
-      `;
-      return;
-    }
-
-    const timelineHTML = events
-      .map(event => `
-        <div class="timeline-event ${event.type} ${event.team}">
-          <div class="event-time">
-            <span>${event.period}기</span>
-            <span>${event.time}</span>
-          </div>
-          <div class="event-icon">
-            ${event.type === 'goal' ? '⚽' : '🚨'}
-          </div>
-          <div class="event-description">
-            ${event.description}
-          </div>
-        </div>
-      `)
-      .join('');
-
-    timelineContainer.innerHTML = `
-      <h3>경기 타임라인</h3>
-      <div class="timeline">
-        ${timelineHTML}
-      </div>
-    `;
-  },
-
-  createTimelineEvents() {
-    const events = [];
-    
-    // 득점 이벤트 추가
-    if (this.currentMatch.scorers) {
-      this.currentMatch.scorers.forEach(scorer => {
-        events.push({
-          type: 'goal',
-          team: scorer.team,
-          period: scorer.period,
-          time: scorer.time,
-          description: `${scorer.player} 득점`
-        });
-      });
-    }
-    
-    // 반칙 이벤트 추가
-    if (this.currentMatch.penalties) {
-      this.currentMatch.penalties.forEach(penalty => {
-        events.push({
-          type: 'penalty',
-          team: penalty.team,
-          period: penalty.period,
-          time: penalty.time,
-          description: `${penalty.player} ${penalty.reason} (${penalty.duration}분)`
-        });
-      });
-    }
-    
-    // 시간순 정렬 (기간, 시간)
-    return events.sort((a, b) => {
-      if (a.period !== b.period) return a.period - b.period;
-      return this.parseTime(a.time) - this.parseTime(b.time);
-    });
-  },
-
-  parseTime(timeString) {
-    // "MM:SS" 형식을 초로 변환
-    const [minutes, seconds] = timeString.split(':').map(Number);
-    return minutes * 60 + seconds;
-  },
-
-  renderPlayers() {
-    const playersContainer = document.querySelector('.players-container');
-    if (!playersContainer) return;
-
-    // 임시 선수 데이터 (실제로는 별도 데이터가 필요)
-    const homePlayers = this.generateSamplePlayers('home');
-    const awayPlayers = this.generateSamplePlayers('away');
-
-    playersContainer.innerHTML = `
-      <div class="team-players">
-        <h3>홈팀 선수 명단</h3>
-        <div class="players-list">
-          ${homePlayers.map(player => `
-            <div class="player-item">
-              <div class="player-name">${player.name}</div>
-              <div class="player-position">${player.position}</div>
-              <div class="player-number">#${player.number}</div>
+    leaderboardElement.innerHTML = `
+        <div style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; 
+                    border-radius: 20px; padding: 2rem;">
+            <h3 style="color: #ffffff; margin-bottom: 2rem; font-size: 1.3rem; font-weight: 700;">순위표</h3>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #2a2a2a;">
+                            <th style="padding: 1rem; text-align: center; color: #888888; font-weight: 600;">순위</th>
+                            <th style="padding: 1rem; text-align: left; color: #888888; font-weight: 600;">팀명</th>
+                            <th style="padding: 1rem; text-align: center; color: #888888; font-weight: 600;">경기</th>
+                            <th style="padding: 1rem; text-align: center; color: #888888; font-weight: 600;">승</th>
+                            <th style="padding: 1rem; text-align: center; color: #888888; font-weight: 600;">무</th>
+                            <th style="padding: 1rem; text-align: center; color: #888888; font-weight: 600;">패</th>
+                            <th style="padding: 1rem; text-align: center; color: #888888; font-weight: 600;">득점</th>
+                            <th style="padding: 1rem; text-align: center; color: #888888; font-weight: 600;">실점</th>
+                            <th style="padding: 1rem; text-align: center; color: #888888; font-weight: 600;">승점</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${teams.map((team, index) => `
+                            <tr style="border-bottom: 1px solid #2a2a2a;">
+                                <td style="padding: 1rem; text-align: center; color: #ffffff; font-weight: 700;">${index + 1}</td>
+                                <td style="padding: 1rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e, #16213e); 
+                                                     border-radius: 8px; display: flex; align-items: center; justify-content: center; 
+                                                     color: #ffffff; font-weight: 700; font-size: 0.9rem;">${team.logo}</span>
+                                        <span style="color: #ffffff; font-weight: 600;">${team.name}</span>
+                                    </div>
+                                </td>
+                                <td style="padding: 1rem; text-align: center; color: #ffffff;">${team.matches}</td>
+                                <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">${team.wins}</td>
+                                <td style="padding: 1rem; text-align: center; color: #f59e0b; font-weight: 600;">${team.draws}</td>
+                                <td style="padding: 1rem; text-align: center; color: #ef4444; font-weight: 600;">${team.losses}</td>
+                                <td style="padding: 1rem; text-align: center; color: #ffffff;">${team.goalsFor}</td>
+                                <td style="padding: 1rem; text-align: center; color: #ffffff;">${team.goalsAgainst}</td>
+                                <td style="padding: 1rem; text-align: center; color: #ffffff; font-weight: 700; font-size: 1.1rem;">${team.points}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
             </div>
-          `).join('')}
         </div>
-      </div>
-      
-      <div class="team-players">
-        <h3>원정팀 선수 명단</h3>
-        <div class="players-list">
-          ${awayPlayers.map(player => `
-            <div class="player-item">
-              <div class="player-name">${player.name}</div>
-              <div class="player-position">${player.position}</div>
-              <div class="player-number">#${player.number}</div>
+    `;
+}
+
+// 경기 결과 탭
+function renderMatchesContent() {
+    const matchesElement = document.getElementById('matches-content');
+    if (!matchesElement) return;
+
+    const matches = generateMatches(currentLeague.completedMatches);
+
+    matchesElement.innerHTML = `
+        <div style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; 
+                    border-radius: 20px; padding: 2rem;">
+            <h3 style="color: #ffffff; margin-bottom: 2rem; font-size: 1.3rem; font-weight: 700;">경기 결과</h3>
+            <div style="display: grid; gap: 1rem;">
+                ${matches.map(match => {
+                    const homeTeam = teamsData.find(t => t.id === match.homeTeam);
+                    const awayTeam = teamsData.find(t => t.id === match.awayTeam);
+                    
+                    return `
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 12px; 
+                                    border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <span style="color: #888888; font-size: 0.9rem;">${match.date}</span>
+                                    <span style="color: #888888; font-size: 0.9rem;">•</span>
+                                    <span style="color: #888888; font-size: 0.9rem;">${match.venue}</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex: 1;">
+                                    <span style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e, #16213e); 
+                                                 border-radius: 8px; display: flex; align-items: center; justify-content: center; 
+                                                 color: #ffffff; font-weight: 700;">${homeTeam?.logo}</span>
+                                    <span style="color: #ffffff; font-weight: 600; flex: 1;">${homeTeam?.name}</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem; font-size: 1.5rem; 
+                                            font-weight: 700; color: #ffffff;">
+                                    <span>${match.homeScore}</span>
+                                    <span style="color: #888888; font-size: 1rem;">:</span>
+                                    <span>${match.awayScore}</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem; flex: 1; justify-content: flex-end;">
+                                    <span style="color: #ffffff; font-weight: 600; flex: 1; text-align: right;">${awayTeam?.name}</span>
+                                    <span style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e, #16213e); 
+                                                 border-radius: 8px; display: flex; align-items: center; justify-content: center; 
+                                                 color: #ffffff; font-weight: 700;">${awayTeam?.logo}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
             </div>
-          `).join('')}
         </div>
-      </div>
     `;
-  },
+}
 
-  generateSamplePlayers(team) {
-    // 임시 선수 데이터 생성 (실제로는 데이터베이스에서 가져와야 함)
-    const positions = ['GK', 'D', 'F'];
-    const names = ['김철수', '박영희', '이민수', '최지영', '정현우', '한소영', '윤태호', '임수진'];
-    
-    return Array.from({ length: 8 }, (_, i) => ({
-      name: names[i],
-      position: positions[i % positions.length],
-      number: i + 1
-    }));
-  },
+// 일정 탭
+function renderScheduleContent() {
+    const scheduleElement = document.getElementById('schedule-content');
+    if (!scheduleElement) return;
 
-  renderPenalties() {
-    const penaltiesContainer = document.querySelector('.penalties-container');
-    if (!penaltiesContainer) return;
+    const upcomingMatches = generateUpcomingMatches(currentLeague.totalMatches - currentLeague.completedMatches);
 
-    if (!this.currentMatch.penalties || this.currentMatch.penalties.length === 0) {
-      penaltiesContainer.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">🏒</div>
-          <p>반칙 데이터가 없습니다</p>
+    scheduleElement.innerHTML = `
+        <div style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); border: 1px solid #2a2a2a; 
+                    border-radius: 20px; padding: 2rem;">
+            <h3 style="color: #ffffff; margin-bottom: 2rem; font-size: 1.3rem; font-weight: 700;">예정 경기</h3>
+            ${upcomingMatches.length > 0 ? `
+                <div style="display: grid; gap: 1rem;">
+                    ${upcomingMatches.map(match => {
+                        const homeTeam = teamsData.find(t => t.id === match.homeTeam);
+                        const awayTeam = teamsData.find(t => t.id === match.awayTeam);
+                        
+                        return `
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 12px; 
+                                        border: 1px solid rgba(255, 255, 255, 0.1);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <span style="color: #ffffff; font-weight: 600;">${match.date}</span>
+                                        <span style="color: #888888;">•</span>
+                                        <span style="color: #888888;">${match.time}</span>
+                                        <span style="color: #888888;">•</span>
+                                        <span style="color: #888888;">${match.venue}</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                                    <div style="display: flex; align-items: center; gap: 1rem; flex: 1;">
+                                        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e, #16213e); 
+                                                     border-radius: 8px; display: flex; align-items: center; justify-content: center; 
+                                                     color: #ffffff; font-weight: 700;">${homeTeam?.logo}</span>
+                                        <span style="color: #ffffff; font-weight: 600;">${homeTeam?.name}</span>
+                                    </div>
+                                    <div style="color: #888888; font-size: 1.2rem; font-weight: 600;">VS</div>
+                                    <div style="display: flex; align-items: center; gap: 1rem; flex: 1; justify-content: flex-end;">
+                                        <span style="color: #ffffff; font-weight: 600;">${awayTeam?.name}</span>
+                                        <span style="width: 32px; height: 32px; background: linear-gradient(135deg, #1a1a2e, #16213e); 
+                                                     border-radius: 8px; display: flex; align-items: center; justify-content: center; 
+                                                     color: #ffffff; font-weight: 700;">${awayTeam?.logo}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            ` : `
+                <div style="text-align: center; padding: 3rem; color: #888888;">
+                    <p>예정된 경기가 없습니다.</p>
+                </div>
+            `}
         </div>
-      `;
-      return;
-    }
-
-    const penaltiesHTML = this.currentMatch.penalties
-      .map(penalty => `
-        <div class="penalty-item ${penalty.team}">
-          <div class="penalty-time">
-            <span>${penalty.period}기</span>
-            <span>${penalty.time}</span>
-          </div>
-          <div class="penalty-team">${penalty.team === 'home' ? '홈팀' : '원정팀'}</div>
-          <div class="penalty-player">${penalty.player}</div>
-          <div class="penalty-reason">${penalty.reason}</div>
-          <div class="penalty-duration">${penalty.duration}분</div>
-        </div>
-      `)
-      .join('');
-
-    penaltiesContainer.innerHTML = `
-      <h3>반칙 로그</h3>
-      <div class="penalties-list">
-        ${penaltiesHTML}
-      </div>
     `;
-  },
+}
 
-  bindEvents() {
-    // 탭 클릭 이벤트
-    document.addEventListener('click', (e) => {
-      if (e.target.matches('.tab-btn')) {
-        const tabName = e.target.dataset.tab;
-        this.showTab(tabName);
-      }
-    });
-
-    // 팀 이름 클릭 시 팀 페이지로 이동
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('.team-name')) {
-        const teamName = e.target.closest('.team-name').textContent;
-        this.navigateToTeam(teamName);
-      }
-    });
-  },
-
-  navigateToTeam(teamName) {
-    window.location.href = `team.html?name=${encodeURIComponent(teamName)}`;
-  },
-
-  initTabs() {
+// 탭 설정
+function setupTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
-    if (tabButtons.length > 0) {
-      tabButtons[0].classList.add('active');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetTab = button.getAttribute('data-tab');
+
+            // 모든 탭 버튼 비활성화
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.color = '#888888';
+                btn.style.borderBottomColor = 'transparent';
+                btn.style.background = 'transparent';
+            });
+
+            // 클릭된 탭 버튼 활성화
+            button.classList.add('active');
+            button.style.color = '#ffffff';
+            button.style.borderBottomColor = '#ffffff';
+            button.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)';
+
+            // 모든 탭 콘텐츠 숨기기
+            tabContents.forEach(content => {
+                content.style.display = 'none';
+                content.classList.remove('active');
+            });
+
+            // 선택된 탭 콘텐츠 표시
+            const targetContent = document.getElementById(`${targetTab}-content`);
+            if (targetContent) {
+                targetContent.style.display = 'block';
+                targetContent.classList.add('active');
+            }
+        });
+    });
+}
+
+// 유틸리티 함수들
+function getStatusColor(status) {
+    switch (status) {
+        case '진행중': return 'linear-gradient(135deg, #10b981, #34d399)';
+        case '예정': return 'linear-gradient(135deg, #3b82f6, #60a5fa)';
+        case '완료': return 'linear-gradient(135deg, #6b7280, #9ca3af)';
+        default: return 'linear-gradient(135deg, #6b7280, #9ca3af)';
     }
-  },
+}
 
-  showTab(tabName) {
-    // 모든 탭 비활성화
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.classList.remove('active');
-    });
-    document.querySelectorAll('.tab-panel').forEach(panel => {
-      panel.classList.remove('active');
-    });
+function formatDateRange(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return `${start.getMonth() + 1}.${start.getDate()} - ${end.getMonth() + 1}.${end.getDate()}`;
+}
 
-    // 선택된 탭 활성화
-    const selectedTab = document.querySelector(`[data-tab="${tabName}"]`);
-    const selectedPanel = document.querySelector(`#${tabName}-panel`);
+function generateMatches(count) {
+    const matches = [];
+    const teams = currentLeague.teams;
     
-    if (selectedTab) selectedTab.classList.add('active');
-    if (selectedPanel) selectedPanel.classList.add('active');
-
-    this.currentTab = tabName;
-  },
-
-  showError(message) {
-    const main = document.querySelector('.main');
-    if (main) {
-      main.innerHTML = `
-        <div class="error-state">
-          <div class="error-icon">⚠️</div>
-          <h1>오류가 발생했습니다</h1>
-          <p>${message}</p>
-          <div class="error-actions">
-            <a href="/" class="btn-secondary">홈으로 돌아가기</a>
-          </div>
-        </div>
-      `;
+    for (let i = 0; i < count; i++) {
+        const homeTeam = teams[Math.floor(Math.random() * teams.length)];
+        let awayTeam;
+        do {
+            awayTeam = teams[Math.floor(Math.random() * teams.length)];
+        } while (awayTeam === homeTeam);
+        
+        matches.push({
+            homeTeam, awayTeam,
+            homeScore: Math.floor(Math.random() * 6),
+            awayScore: Math.floor(Math.random() * 6),
+            date: new Date(Date.now() - i * 7 * 24 * 60 * 60 * 1000).toLocaleDateString('ko-KR'),
+            venue: currentLeague.venues[Math.floor(Math.random() * currentLeague.venues.length)]
+        });
     }
-  }
-};
+    
+    return matches;
+}
 
-// 전역으로 노출
-window.MatchManager = MatchManager;
+function generateUpcomingMatches(count) {
+    if (currentLeague.status === '완료') return [];
+    
+    const matches = [];
+    const teams = currentLeague.teams;
+    
+    for (let i = 0; i < count && i < 10; i++) {
+        const homeTeam = teams[Math.floor(Math.random() * teams.length)];
+        let awayTeam;
+        do {
+            awayTeam = teams[Math.floor(Math.random() * teams.length)];
+        } while (awayTeam === homeTeam);
+        
+        matches.push({
+            homeTeam, awayTeam,
+            date: new Date(Date.now() + (i + 1) * 7 * 24 * 60 * 60 * 1000).toLocaleDateString('ko-KR'),
+            time: `${14 + Math.floor(Math.random() * 4)}:00`,
+            venue: currentLeague.venues[Math.floor(Math.random() * currentLeague.venues.length)]
+        });
+    }
+    
+    return matches;
+}

@@ -1,40 +1,29 @@
 <header class="header">
     <div class="header-container">
         <div class="logo">
-            <img src="assets/img/logo_1.png" alt="아이스하키 랭킹" class="logo-img">
+            <img src="assets/img/logo.png" alt="아이스하키 랭킹" class="logo-img">
             <span class="logo-text">Hockey Analytics</span>
         </div>
         
-        <div class="search-container">
-            <div class="search-wrapper">
-                <input type="text" id="global-search" class="search-input" placeholder="팀명을 검색하세요 (예: 레오파즈)">
-                <button class="search-btn" aria-label="검색">
-                    <i data-lucide="search"></i>
-                </button>
-                <div id="search-suggestions" class="search-suggestions"></div>
+        
+
+        <div class="header-right">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="global-search" class="search-input" placeholder="팀명을 검색하세요 (예: 레오파즈)">
+                    <button class="search-btn" aria-label="검색">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <div id="search-suggestions" class="search-suggestions"></div>
+                </div>
             </div>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link" id="nav-home">홈</a>
+                <a href="teams.html" class="nav-link" id="nav-teams">팀 목록</a>
+                <a href="matches.html" class="nav-link" id="nav-matches">대회</a>
+                <a href="stats.html" class="nav-link" id="nav-stats">통계</a>
+                <a href="h2h.html" class="nav-link" id="nav-h2h">팀 비교</a>
+            </nav>
         </div>
-
-        <div class="header-filters">
-            <select id="season-filter" class="filter-select">
-                <option value="2024">2024 시즌</option>
-                <option value="2023">2023 시즌</option>
-            </select>
-            <select id="age-filter" class="filter-select">
-                <option value="all">전 연령대</option>
-                <option value="U18">U18</option>
-                <option value="U15">U15</option>
-                <option value="U12">U12</option>
-                <option value="U10">U10</option>
-            </select>
-        </div>
-
-        <nav class="header-nav">
-            <a href="index.html" class="nav-link" id="nav-home">홈</a>
-            <a href="teams.html" class="nav-link" id="nav-teams">팀 목록</a>
-            <a href="matches.html" class="nav-link" id="nav-matches">대회</a>
-            <a href="stats.html" class="nav-link" id="nav-stats">통계</a>
-            <a href="h2h.html" class="nav-link" id="nav-h2h">팀 비교</a>
-        </nav>
     </div>
 </header>
