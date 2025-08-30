@@ -47,11 +47,17 @@ const testConnection = async () => {
     log.title('데이터베이스 연결 테스트');
     
     try {
+        log.info(`연결 시도: ${process.env.DB_HOST}:${process.env.DB_PORT || 3306}`);
+        log.info(`사용자: ${process.env.DB_USER}`);
+        
         const connection = await mysql.createConnection({
             host: process.env.DB_HOST,
             port: process.env.DB_PORT || 3306,
             user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD
+            password: process.env.DB_PASSWORD,
+            connectTimeout: 120000,
+            acquireTimeout: 120000,
+            timeout: 120000
         });
         
         await connection.ping();
@@ -59,7 +65,8 @@ const testConnection = async () => {
         await connection.end();
         return true;
     } catch (error) {
-        log.error(`데이터베이스 연결 실패: ${error.message}`);
+        log.error(`데이터베이스 연결 실패: ${error.code} - ${error.message}`);
+        log.error(`오류 상세: ${JSON.stringify(error, null, 2)}`);
         return false;
     }
 };
@@ -96,17 +103,26 @@ const executeSchema = async () => {
             port: process.env.DB_PORT || 3306,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
-            multipleStatements: true
+            database: process.env.DB_NAME
         });
         
         const schemaPath = path.join(__dirname, 'src', 'database', 'schema.sql');
         const schema = await fs.readFile(schemaPath, 'utf8');
         
-        // USE DATABASE 구문 제거 (이미 연결됨)
-        const cleanSchema = schema.replace(/USE\s+\w+;/gi, '');
+        // 각 SQL 문을 개별적으로 실행
+        const statements = schema
+            .split(';')
+            .map(stmt => stmt.trim())
+            .filter(stmt => stmt && !stmt.startsWith('--') && !stmt.startsWith('/*'));
+            
+        for (const statement of statements) {
+            if (statement.toLowerCase().includes('create table') || 
+                statement.toLowerCase().includes('insert into')) {
+                await connection.execute(statement);
+                log.info(`실행 완료: ${statement.split('(')[0].trim()}...`);
+            }
+        }
         
-        await connection.execute(cleanSchema);
         log.success('데이터베이스 스키마 생성 완료');
         
         await connection.end();

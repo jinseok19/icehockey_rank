@@ -1,10 +1,7 @@
 -- Ice Hockey Statistics Database Schema
 -- 아이스하키 통계 데이터베이스 스키마
 
-CREATE DATABASE IF NOT EXISTS icehockey_stats 
-CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-USE icehockey_stats;
+-- 데이터베이스는 setup.js에서 생성됨
 
 -- 팀 정보 테이블
 CREATE TABLE teams (
